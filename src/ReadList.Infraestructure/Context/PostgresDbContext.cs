@@ -1,20 +1,32 @@
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using ReadList.Domain.Models;
 
 namespace ReadList.Infraestructure.Context
 {
     public class PostgresDbContext : DbContext
     {
-        public DbSet<TestandoMigrations>? TestandoMigrations { get; set; }
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
+        { 
+            
+        }
+
+        public DbSet<TesteFluxoModel> TesteFluxo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+            modelBuilder.Entity<TesteFluxoModel>()
+                .HasKey(t => t.Id);
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=postgres");
+            modelBuilder.Entity<TesteFluxoModel>()
+                .Property(t => t.Nome)
+                .HasColumnName("nome");
+            
+            modelBuilder.Entity<TesteFluxoModel>()
+                .Property(t => t.Numero)
+                .HasColumnName("numero");
+
+            modelBuilder.Entity<TesteFluxoModel>()
+                .ToTable("teste", schema: "readlist");
         }
     }
 }

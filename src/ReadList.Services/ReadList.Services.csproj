@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\ReadList.Domain\ReadList.Domain.csproj" />
+    <ProjectReference Include="..\ReadList.Infraestructure\ReadList.Infraestructure.csproj" />
+    <ProjectReference Include="..\ReadList.Application\ReadList.Application.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

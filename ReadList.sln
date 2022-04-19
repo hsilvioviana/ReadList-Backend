@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Domain", "src\Read
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Infraestructure", "src\ReadList.Infraestructure\ReadList.Infraestructure.csproj", "{6C48ADCA-FBA6-41D6-A064-35A90AC38E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Service", "src\ReadList.Service\ReadList.Service.csproj", "{F955403D-35EF-47DF-ADF9-C8848D213E07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Services", "src\ReadList.Services\ReadList.Services.csproj", "{F955403D-35EF-47DF-ADF9-C8848D213E07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
