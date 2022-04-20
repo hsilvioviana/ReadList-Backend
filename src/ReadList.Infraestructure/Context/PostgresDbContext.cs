@@ -10,7 +10,7 @@ namespace ReadList.Infraestructure.Context
             
         }
 
-        public DbSet<TesteFluxoModel> TesteFluxo { get; set; }
+        public DbSet<TesteFluxoModel> TesteFluxo => Set<TesteFluxoModel>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,14 @@ namespace ReadList.Infraestructure.Context
             modelBuilder.Entity<TesteFluxoModel>()
                 .Property(t => t.Numero)
                 .HasColumnName("numero");
+            
+            modelBuilder.Entity<TesteFluxoModel>()
+                .Property(t => t.DataCriacao)
+                .HasColumnName("datacriacao");
+
+            modelBuilder.Entity<TesteFluxoModel>()
+                .Property(t => t.DataModificacao)
+                .HasColumnName("datamodificacao");
 
             modelBuilder.Entity<TesteFluxoModel>()
                 .ToTable("teste", schema: "readlist");

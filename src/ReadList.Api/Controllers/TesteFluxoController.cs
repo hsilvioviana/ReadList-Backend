@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ReadList.Domain.Models;
+using ReadList.Application.ViewModels;
 using ReadList.Services.Interfaces;
 
 namespace ReadList.Api.Controllers;
@@ -14,9 +14,9 @@ public class TesteFluxoController : ControllerBase
         _service = service;
     }
 
-    [HttpPost("Adicionar")]
-    public async Task<object> Post([FromQuery] TesteFluxoModel model)
+    [HttpPost("Criar")]
+    public async Task<object> Post([FromQuery] CriarTesteFluxoViewModel model)
     {
-        return await _service.AdicionarTesteFluxo(model);
+        return await _service.Criar(model);
     }
 }

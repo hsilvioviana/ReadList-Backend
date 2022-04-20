@@ -2,8 +2,8 @@ using ReadList.Domain.Models;
 
 namespace ReadList.Domain.Interfaces
 {
-    public interface ITesteFluxoRepository
+    public interface ITesteFluxoRepository : IBaseRepository<TesteFluxoModel>
     {
-        public Task<TesteFluxoModel> AdicionarTesteFluxo(TesteFluxoModel model);
+        
     }
 }

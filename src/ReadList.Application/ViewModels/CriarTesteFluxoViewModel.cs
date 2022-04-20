@@ -1,6 +1,6 @@
-namespace ReadList.Domain.Models
+namespace ReadList.Application.ViewModels
 {
-    public class TesteFluxoModel : BaseModel
+    public class CriarTesteFluxoViewModel
     {
         public string? Nome { get; set; }
         public int? Numero { get; set; }

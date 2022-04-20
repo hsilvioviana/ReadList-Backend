@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReadList.Domain.Interfaces;
+using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
 using ReadList.Services.Interfaces;

@@ -4,19 +4,12 @@ using ReadList.Infraestructure.Context;
 
 namespace ReadList.Infraestructure.Repositories
 {
-    public class TesteFluxoRepository : ITesteFluxoRepository
+    public class TesteFluxoRepository : BaseRepository<TesteFluxoModel>, ITesteFluxoRepository
     {
         PostgresDbContext _context;
-        public TesteFluxoRepository (PostgresDbContext context)
+        public TesteFluxoRepository (PostgresDbContext context) : base(context)
         {
             _context = context;
-        }
-
-        public async Task<TesteFluxoModel> AdicionarTesteFluxo (TesteFluxoModel model)
-        {
-            await _context.TesteFluxo.AddAsync(model);
-            await _context.SaveChangesAsync();
-            return model;
         }
     }
 }

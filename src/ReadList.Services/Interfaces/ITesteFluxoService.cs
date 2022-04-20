@@ -1,9 +1,9 @@
-using ReadList.Domain.Models;
+using ReadList.Application.ViewModels;
 
 namespace ReadList.Services.Interfaces
 {
     public interface ITesteFluxoService
     {
-        public Task<TesteFluxoModel> AdicionarTesteFluxo (TesteFluxoModel model);
+        Task<TesteFluxoViewModel> Criar(CriarTesteFluxoViewModel viewModel);
     }
 }
