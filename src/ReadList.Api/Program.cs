@@ -1,4 +1,5 @@
 using AutoMapper;
+using ReadList.Api;
 using ReadList.Application.AutoMapper;
 using ReadList.CrossCutting;
 
@@ -24,6 +25,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthorization();
 
