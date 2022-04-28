@@ -4,10 +4,11 @@ using ReadList.Infraestructure.Context;
 
 namespace ReadList.Infraestructure.Repositories
 {
-    public class TesteFluxoRepository : BaseRepository<TesteFluxoModel>, ITesteFluxoRepository
+    public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
         PostgresDbContext _context;
-        public TesteFluxoRepository (PostgresDbContext context) : base(context)
+
+        public UserRepository(PostgresDbContext context) : base(context)
         {
             _context = context;
         }

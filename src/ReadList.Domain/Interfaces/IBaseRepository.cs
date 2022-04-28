@@ -2,11 +2,11 @@ namespace ReadList.Domain.Interfaces
 {
     public interface IBaseRepository<TModel> : IDisposable
     {
-        Task<IList<TModel>> Buscar();
-        Task<TModel> BuscarPorId(Guid id);        
-        Task Criar(TModel model);
-        Task CriarVarios(List<TModel> models);
-        Task Alterar(TModel model);
-        Task Deletar(Guid id);
+        Task<IList<TModel>> Search();
+        Task<TModel> Find(Guid id);        
+        Task Create(TModel model);
+        Task CreateMany(List<TModel> models);
+        Task Update(TModel model);
+        Task Delete(Guid id);
     }
 }

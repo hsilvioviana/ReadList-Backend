@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReadList.Domain.Interfaces;
-using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
 using ReadList.Services.Interfaces;
@@ -15,11 +14,11 @@ namespace ReadList.CrossCutting
         public static void AddDependencies (this IServiceCollection services, IConfiguration configuration)
         {
             #region Repositories
-            services.AddScoped<ITesteFluxoRepository, TesteFluxoRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             #endregion
 
             #region Services
-            services.AddScoped<ITesteFluxoService, TesteFluxoService>();
+            services.AddScoped<IUserService, UserService>();
             #endregion
 
             #region DbContexts

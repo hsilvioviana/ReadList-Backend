@@ -2,7 +2,7 @@ using ReadList.Domain.Models;
 
 namespace ReadList.Domain.Interfaces
 {
-    public interface ITesteFluxoRepository : IBaseRepository<TesteFluxoModel>
+    public interface IUserRepository : IBaseRepository<UserModel>
     {
         
     }

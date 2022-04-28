@@ -8,7 +8,7 @@ namespace ReadList.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<TesteFluxoModel, TesteFluxoViewModel>();
+            CreateMap<UserModel, UserViewModel>();
         }
     }
 }
