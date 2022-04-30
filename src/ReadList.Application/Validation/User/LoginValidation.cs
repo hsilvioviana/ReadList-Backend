@@ -1,20 +1,16 @@
 using FluentValidation;
-using ReadList.Application.ViewModels;
+using ReadList.Application.ViewModels.User;
 
-namespace ReadList.Application.Validation
+namespace ReadList.Application.Validation.User
 {
-    public class CreateUserValidation : AbstractValidator<CreateUserViewModel>
+    public class LoginValidation : AbstractValidator<LoginViewModel>
     {
-        public CreateUserValidation()
+        public LoginValidation()
         {
             RuleFor(teste => teste.Username)
                 .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")
                 .MinimumLength(3).WithMessage("{PropertyName} deve ter pelo menos 3 caracteres")
                 .MaximumLength(30).WithMessage("{PropertyName} deve ter no máximo 30 caracteres");
-
-            RuleFor(teste => teste.Email)
-                .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")
-                .EmailAddress().WithMessage("Formato de email inválido");
 
             RuleFor(teste => teste.Password)
                 .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")

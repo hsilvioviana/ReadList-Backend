@@ -1,11 +1,11 @@
 using AutoMapper;
-using ReadList.Application.Validation;
-using ReadList.Application.ViewModels;
 using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
 using ReadList.Services.Interfaces;
 using FluentValidation;
 using ReadList.Application.Utils;
+using ReadList.Application.Validation.User;
+using ReadList.Application.ViewModels.User;
 
 namespace ReadList.Services.Services
 {
@@ -20,9 +20,9 @@ namespace ReadList.Services.Services
             _mapper = mapper;
         }
 
-        public async Task SignUp(CreateUserViewModel viewModel)
+        public async Task SignUp(SignUpViewModel viewModel)
         {
-            var validation = new CreateUserValidation();
+            var validation = new SignUpValidation();
 
             validation.Validate(viewModel, options => options.ThrowOnFailures());
 
@@ -33,6 +33,29 @@ namespace ReadList.Services.Services
             model.UpdatedAt = DateTime.Now;
 
             await _repository.Create(model);
+        }
+
+        public async Task Login(LoginViewModel viewModel)
+        {
+            var validation = new LoginValidation();
+
+            validation.Validate(viewModel, options => options.ThrowOnFailures());
+
+            var model = _mapper.Map<UserModel>(viewModel);
+
+            var user = await _repository.SearchByUsername(model.Username);
+
+            if (user.Username == "")
+            {
+                throw new Exception("Usuário não encontrado.");
+            }
+
+            var correctPassword = Security.Check(user.Password, model.Password);
+
+            if (!correctPassword)
+            {
+                throw new Exception("Senha incorreta.");
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
-namespace ReadList.Application.ViewModels
+namespace ReadList.Application.ViewModels.User
 {    
-    public class CreateUserViewModel
+    public class SignUpViewModel
     {
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

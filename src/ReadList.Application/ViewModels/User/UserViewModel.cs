@@ -1,4 +1,4 @@
-namespace ReadList.Application.ViewModels
+namespace ReadList.Application.ViewModels.User
 {
     public class UserViewModel
     {

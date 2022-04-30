@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -11,6 +12,11 @@ namespace ReadList.Infraestructure.Repositories
         public UserRepository(PostgresDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<UserModel> SearchByUsername(string username)
+        {
+            return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync() ?? new UserModel();
         }
     }
 }

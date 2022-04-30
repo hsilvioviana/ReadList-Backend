@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ReadList.Application.ViewModels;
+using ReadList.Application.ViewModels.User;
 using ReadList.Services.Interfaces;
 
 namespace ReadList.Api.Controllers;
@@ -15,9 +15,16 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("SignUp")]
-    public async Task Signup([FromQuery] CreateUserViewModel viewModel)
+    public async Task Signup([FromQuery] SignUpViewModel viewModel)
     {
         await _service.SignUp(viewModel);
         Ok("Usuário Cadastrado");
+    }
+
+    [HttpPost("Login")]
+    public async Task Login([FromQuery] LoginViewModel viewModel)
+    {
+        await _service.Login(viewModel);
+        Ok("Usuário Logado");
     }
 }
