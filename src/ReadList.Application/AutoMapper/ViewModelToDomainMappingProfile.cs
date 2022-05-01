@@ -1,5 +1,5 @@
 using AutoMapper;
-using ReadList.Application.ViewModels;
+using ReadList.Application.ViewModels.User;
 using ReadList.Domain.Models;
 
 namespace ReadList.Application.AutoMapper
@@ -8,8 +8,9 @@ namespace ReadList.Application.AutoMapper
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<TesteFluxoViewModel, TesteFluxoModel>();
-            CreateMap<CriarTesteFluxoViewModel, TesteFluxoModel>();
+            CreateMap<UserViewModel, UserModel>();
+            CreateMap<SignUpViewModel, UserModel>();
+            CreateMap<LoginViewModel, UserModel>();
         }
     }
 }

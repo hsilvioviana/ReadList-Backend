@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReadList.Infraestructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class users : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,26 +13,27 @@ namespace ReadList.Infraestructure.Migrations
                 name: "readlist");
 
             migrationBuilder.CreateTable(
-                name: "teste",
+                name: "users",
                 schema: "readlist",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    nome = table.Column<string>(type: "text", nullable: true),
-                    numero = table.Column<int>(type: "integer", nullable: true),
-                    datacriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    datamodificacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    username = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_teste", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "teste",
+                name: "users",
                 schema: "readlist");
         }
     }

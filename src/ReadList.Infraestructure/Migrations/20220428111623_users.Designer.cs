@@ -12,8 +12,8 @@ using ReadList.Infraestructure.Context;
 namespace ReadList.Infraestructure.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20220420000911_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220428111623_users")]
+    partial class users
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,31 +24,39 @@ namespace ReadList.Infraestructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ReadList.Domain.Models.TesteFluxoModel", b =>
+            modelBuilder.Entity("ReadList.Domain.Models.UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("datacriacao");
+                        .HasColumnName("created_at");
 
-                    b.Property<DateTime>("DataModificacao")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("datamodificacao");
-
-                    b.Property<string>("Nome")
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("nome");
+                        .HasColumnName("email");
 
-                    b.Property<int?>("Numero")
-                        .HasColumnType("integer")
-                        .HasColumnName("numero");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 
-                    b.ToTable("teste", "readlist");
+                    b.ToTable("users", "readlist");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,31 +10,39 @@ namespace ReadList.Infraestructure.Context
             
         }
 
-        public DbSet<TesteFluxoModel> TesteFluxo => Set<TesteFluxoModel>();
+        public DbSet<UserModel> User => Set<UserModel>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TesteFluxoModel>()
+            modelBuilder.Entity<UserModel>()
                 .HasKey(t => t.Id);
 
-            modelBuilder.Entity<TesteFluxoModel>()
-                .Property(t => t.Nome)
-                .HasColumnName("nome");
-            
-            modelBuilder.Entity<TesteFluxoModel>()
-                .Property(t => t.Numero)
-                .HasColumnName("numero");
-            
-            modelBuilder.Entity<TesteFluxoModel>()
-                .Property(t => t.DataCriacao)
-                .HasColumnName("datacriacao");
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.Id)
+                .HasColumnName("id");
 
-            modelBuilder.Entity<TesteFluxoModel>()
-                .Property(t => t.DataModificacao)
-                .HasColumnName("datamodificacao");
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.Username)
+                .HasColumnName("username");
+            
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.Email)
+                .HasColumnName("email");
 
-            modelBuilder.Entity<TesteFluxoModel>()
-                .ToTable("teste", schema: "readlist");
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.Password)
+                .HasColumnName("password");
+            
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.CreatedAt)
+                .HasColumnName("created_at");
+
+            modelBuilder.Entity<UserModel>()
+                .Property(t => t.UpdatedAt)
+                .HasColumnName("updated_at");
+
+            modelBuilder.Entity<UserModel>()
+                .ToTable("users", schema: "readlist");
         }
     }
 }
