@@ -15,6 +15,7 @@ namespace ReadList.Application.Utils
         {
             _secretKey = configuration["JWT:SecretKey"];
         }
+        
         public string GenerateToken(UserViewModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
