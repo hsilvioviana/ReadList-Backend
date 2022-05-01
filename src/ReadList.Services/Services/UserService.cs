@@ -6,6 +6,7 @@ using FluentValidation;
 using ReadList.Application.Utils;
 using ReadList.Application.Validation.User;
 using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels.Authentication;
 
 namespace ReadList.Services.Services
 {
@@ -20,7 +21,7 @@ namespace ReadList.Services.Services
             _mapper = mapper;
         }
 
-        public async Task SignUp(SignUpViewModel viewModel)
+        public async Task<AuthenticationResponse> SignUp(SignUpViewModel viewModel)
         {
             var validation = new SignUpValidation();
 
@@ -33,9 +34,15 @@ namespace ReadList.Services.Services
             model.UpdatedAt = DateTime.Now;
 
             await _repository.Create(model);
+
+            return new AuthenticationResponse() 
+            {
+                Username = model.Username,
+                Token = JWT.GenerateToken(_mapper.Map<UserViewModel>(model))
+            };
         }
 
-        public async Task Login(LoginViewModel viewModel)
+        public async Task<AuthenticationResponse> Login(LoginViewModel viewModel)
         {
             var validation = new LoginValidation();
 
@@ -56,6 +63,12 @@ namespace ReadList.Services.Services
             {
                 throw new Exception("Senha incorreta.");
             }
+
+            return new AuthenticationResponse() 
+            {
+                Username = model.Username,
+                Token = JWT.GenerateToken(_mapper.Map<UserViewModel>(model))
+            };
         }
     }
 }

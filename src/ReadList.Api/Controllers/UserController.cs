@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReadList.Application.ViewModels.Authentication;
 using ReadList.Application.ViewModels.User;
 using ReadList.Services.Interfaces;
 
@@ -15,16 +17,16 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("SignUp")]
-    public async Task Signup([FromQuery] SignUpViewModel viewModel)
+    [AllowAnonymous]
+    public async Task<AuthenticationResponse> Signup([FromQuery] SignUpViewModel viewModel)
     {
-        await _service.SignUp(viewModel);
-        Ok("Usuário Cadastrado");
+        return await _service.SignUp(viewModel);
     }
 
     [HttpPost("Login")]
-    public async Task Login([FromQuery] LoginViewModel viewModel)
+    [AllowAnonymous]
+    public async Task<AuthenticationResponse> Login([FromQuery] LoginViewModel viewModel)
     {
-        await _service.Login(viewModel);
-        Ok("Usuário Logado");
+        return await _service.Login(viewModel);
     }
 }
