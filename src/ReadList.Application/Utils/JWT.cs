@@ -1,19 +1,24 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ReadList.Application.ViewModels.User;
 
 namespace ReadList.Application.Utils
 {
-    public static class JWT
+    public class JWT
     {
-        private static string _temporarySecret = "q2o3jkmrop23nrfmponmfp-o023jm-f20ojm2";
+        private string _secretKey;
 
-        public static string GenerateToken(UserViewModel user)
+        public JWT(IConfiguration configuration)
+        {
+            _secretKey = configuration["JWT:SecretKey"];
+        }
+        public string GenerateToken(UserViewModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_temporarySecret);
+            var key = Encoding.ASCII.GetBytes(_secretKey);
             
             var tokenDescriptor = new SecurityTokenDescriptor
             {

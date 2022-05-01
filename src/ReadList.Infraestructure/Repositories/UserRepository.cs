@@ -18,5 +18,10 @@ namespace ReadList.Infraestructure.Repositories
         {
             return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync() ?? new UserModel();
         }
+
+        public async Task<UserModel> SearchByEmail(string email)
+        {
+            return await DbSet.Where(U => U.Email == email).FirstOrDefaultAsync() ?? new UserModel();
+        }
     }
 }
