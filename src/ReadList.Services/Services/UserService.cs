@@ -31,11 +31,11 @@ namespace ReadList.Services.Services
 
             var checkUsername = await _repository.SearchByUsername(model.Username);
 
-            CheckVariable(checkUsername.Username, "Equal", "", "O Username fornecido já está em uso.");
+            ThrowErrorWhen(checkUsername.Username, "NotEqual", "", "O Username fornecido já está em uso.");
 
             var checkEmail = await _repository.SearchByEmail(model.Email);
 
-            CheckVariable(checkEmail.Email, "Equal", "", "O Email fornecido já está em uso.");
+            ThrowErrorWhen(checkEmail.Email, "NotEqual", "", "O Email fornecido já está em uso.");
 
             model.Password = Security.Hash(model.Password);
             model.CreatedAt = DateTime.Now;
@@ -58,11 +58,11 @@ namespace ReadList.Services.Services
 
             var user = await _repository.SearchByUsername(requestUser.Username);
 
-            CheckVariable(user.Username, "NotEqual", "", "Usuário não encontrado.");
+            ThrowErrorWhen(user.Username, "Equal", "", "Usuário não encontrado.");
 
             var correctPassword = Security.Check(user.Password, requestUser.Password);
 
-            CheckVariable(correctPassword, "Equal", true, "Senha incorreta.");
+            ThrowErrorWhen(correctPassword, "Equal", false, "Senha incorreta.");
 
             return new AuthenticationResponse() 
             {
