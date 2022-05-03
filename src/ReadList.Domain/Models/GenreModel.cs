@@ -4,6 +4,7 @@ namespace ReadList.Domain.Models
     {
         public string Name { get; set; } = string.Empty;
 
-        public virtual List<BookGenreRelation> Relations { get; set; } = new List<BookGenreRelation>();
+        // public virtual List<BookModel> Books { get; set; } = new List<BookModel>();
+        public virtual List<BookGenreRelationModel> BookGenreRelations { get; set; } = new List<BookGenreRelationModel>();
     }
 }

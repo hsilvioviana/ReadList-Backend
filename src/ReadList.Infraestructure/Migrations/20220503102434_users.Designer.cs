@@ -12,7 +12,7 @@ using ReadList.Infraestructure.Context;
 namespace ReadList.Infraestructure.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20220428111623_users")]
+    [Migration("20220503102434_users")]
     partial class users
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

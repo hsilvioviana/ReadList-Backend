@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReadList.Infraestructure.Context;
@@ -11,9 +12,10 @@ using ReadList.Infraestructure.Context;
 namespace ReadList.Infraestructure.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    partial class PostgresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220503110004_genres")]
+    partial class genres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,23 +23,6 @@ namespace ReadList.Infraestructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("ReadList.Domain.Models.BookGenreRelationModel", b =>
-                {
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("book_id");
-
-                    b.Property<Guid>("GenreId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("genre_id");
-
-                    b.HasKey("BookId", "GenreId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("books_genres_relations", "readlist");
-                });
 
             modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
                 {
@@ -161,25 +146,6 @@ namespace ReadList.Infraestructure.Migrations
                     b.ToTable("users", "readlist");
                 });
 
-            modelBuilder.Entity("ReadList.Domain.Models.BookGenreRelationModel", b =>
-                {
-                    b.HasOne("ReadList.Domain.Models.BookModel", "Book")
-                        .WithMany("BookGenreRelations")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReadList.Domain.Models.GenreModel", "Genre")
-                        .WithMany("BookGenreRelations")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Genre");
-                });
-
             modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
                 {
                     b.HasOne("ReadList.Domain.Models.UserModel", "User")
@@ -189,16 +155,6 @@ namespace ReadList.Infraestructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
-                {
-                    b.Navigation("BookGenreRelations");
-                });
-
-            modelBuilder.Entity("ReadList.Domain.Models.GenreModel", b =>
-                {
-                    b.Navigation("BookGenreRelations");
                 });
 
             modelBuilder.Entity("ReadList.Domain.Models.UserModel", b =>

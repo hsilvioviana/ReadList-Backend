@@ -1,6 +1,6 @@
 namespace ReadList.Domain.Models
 {
-    public class BookGenreRelation
+    public class BookGenreRelationModel
     {
         public Guid BookId { get; set; }
         public Guid GenreId { get; set; }
