@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReadList.Application.ViewModels.Book;
+using ReadList.Services.Interfaces;
 
 namespace ReadList.Api.Controllers
 {
@@ -7,12 +9,19 @@ namespace ReadList.Api.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        [HttpPost("TestJWT")]
+        protected readonly IBookService _service;
+
+        public BooksController(IBookService service)
+        {
+            _service = service;
+        }
+
+        [HttpPost("Search")]
         [Authorize]
-        public ActionResult<string> TestJwt()
+        public async Task<List<BookViewModel>> TestJwt()
         {
             var userId = User.FindFirst("id")?.Value;
-            return $"JWT passou, User Id = {userId}";
+            return await _service.Search(new Guid(userId));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ReadList.Infraestructure.Repositories
             await DbSet.AsNoTracking().ToListAsync();
 
         public virtual async Task<TModel> Find(Guid id) =>
-            await DbSet.FindAsync(id) ?? new TModel();        
+            await DbSet.FindAsync(id);        
 
         public virtual async Task Create(TModel model)
         {

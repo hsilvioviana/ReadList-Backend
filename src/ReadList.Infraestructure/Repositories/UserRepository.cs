@@ -16,12 +16,12 @@ namespace ReadList.Infraestructure.Repositories
 
         public async Task<UserModel> SearchByUsername(string username)
         {
-            return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync() ?? new UserModel();
+            return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync();
         }
 
         public async Task<UserModel> SearchByEmail(string email)
         {
-            return await DbSet.Where(U => U.Email == email).FirstOrDefaultAsync() ?? new UserModel();
+            return await DbSet.Where(U => U.Email == email).FirstOrDefaultAsync();
         }
     }
 }

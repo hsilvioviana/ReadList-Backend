@@ -8,9 +8,11 @@ namespace ReadList.Application.AutoMapper
     {
         public ViewModelToDomainMappingProfile()
         {
+            #region User
             CreateMap<UserViewModel, UserModel>();
             CreateMap<SignUpViewModel, UserModel>();
             CreateMap<LoginViewModel, UserModel>();
+            #endregion
         }
     }
 }

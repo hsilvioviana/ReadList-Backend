@@ -14,7 +14,7 @@ namespace ReadList.Infraestructure.Context
         public DbSet<UserModel> User => Set<UserModel>();
         public DbSet<BookModel> Book => Set<BookModel>();
         public DbSet<GenreModel> Genre => Set<GenreModel>();
-        // public DbSet<BookGenreRelationModel> BookGenreRelation => Set<BookGenreRelationModel>();
+        public DbSet<BookGenreRelationModel> BookGenreRelation => Set<BookGenreRelationModel>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
