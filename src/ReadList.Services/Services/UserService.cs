@@ -70,5 +70,16 @@ namespace ReadList.Services.Services
                 Token = new JWT(_configuration).GenerateToken(_mapper.Map<UserViewModel>(user))
             };
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _repository?.Dispose();
+        }
     }
 }

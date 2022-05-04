@@ -6,10 +6,10 @@ namespace ReadList.Infraestructure.Context
 {
     public class PostgresDbContext : DbContext
     {
-        // public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
-        // { 
+        public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
+        { 
             
-        // }
+        }
 
         public DbSet<UserModel> User => Set<UserModel>();
         public DbSet<BookModel> Book => Set<BookModel>();
@@ -19,11 +19,6 @@ namespace ReadList.Infraestructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=postgres");
         }
     }
 }
