@@ -3,9 +3,8 @@ using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
 using ReadList.Services.Interfaces;
 using ReadList.Application.Utils;
-using ReadList.Application.Validation.User;
-using ReadList.Application.ViewModels.User;
-using ReadList.Application.ViewModels.Authentication;
+using ReadList.Application.Validations;
+using ReadList.Application.ViewModels;
 using Microsoft.Extensions.Configuration;
 
 namespace ReadList.Services.Services

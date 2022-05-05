@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ReadList.Application.ViewModels.Book;
+using ReadList.Application.ViewModels;
 using ReadList.Services.Interfaces;
 
 namespace ReadList.Api.Controllers
@@ -18,10 +18,10 @@ namespace ReadList.Api.Controllers
 
         [HttpPost("Search")]
         [Authorize]
-        public async Task<List<BookViewModel>> TestJwt()
+        public async Task<List<FormattedBookListViewModel>> Search()
         {
             var userId = User.FindFirst("id")?.Value;
-            return await _service.Search(new Guid(userId));
+            return await _service.SearchDividedByYear(new Guid(userId));
         }
     }
 }

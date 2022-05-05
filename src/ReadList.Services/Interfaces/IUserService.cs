@@ -1,5 +1,4 @@
-using ReadList.Application.ViewModels.Authentication;
-using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels;
 
 namespace ReadList.Services.Interfaces
 {

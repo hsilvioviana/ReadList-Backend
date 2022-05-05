@@ -1,7 +1,5 @@
 using AutoMapper;
-using ReadList.Application.ViewModels.Book;
-using ReadList.Application.ViewModels.Genre;
-using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 
 namespace ReadList.Application.AutoMapper

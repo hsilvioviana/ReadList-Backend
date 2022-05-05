@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ReadList.Application.ViewModels.Authentication;
-using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels;
 using ReadList.Services.Interfaces;
 
 namespace ReadList.Api.Controllers;
