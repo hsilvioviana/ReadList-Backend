@@ -39,6 +39,31 @@ namespace ReadList.Services.Services
             await _genreService.CreateMany(viewModel.Genres, model.Id);
         }
 
+        public async Task Update(UpdateBookViewModel viewModel)
+        {
+            var model =  await _repository.Find(viewModel.Id);
+
+            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para editar este livro.");
+
+            model.Title = viewModel.Title;
+            model.Author = viewModel.Author;
+            model.ReleaseYear = viewModel.ReleaseYear;
+            model.ReadingYear = viewModel.ReadingYear;
+            model.IsFiction = viewModel.IsFiction;
+            model.NumberOfPages = viewModel.NumberOfPages;
+            model.CountryOfOrigin = viewModel.CountryOfOrigin;
+            model.Language = viewModel.Language;
+            model.UpdatedAt = DateTime.Now;
+
+            await _repository.Update(model);
+
+            await _genreService.Reset(model.Id);
+
+            await _genreService.CreateMany(viewModel.Genres, model.Id);
+        }
+
         public async Task<List<FormattedBookListViewModel>> SearchDividedByYear(Guid userId)
         {
             var models = await _repository.SearchByUserId(userId);

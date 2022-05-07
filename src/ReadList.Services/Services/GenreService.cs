@@ -62,6 +62,11 @@ namespace ReadList.Services.Services
             }
         }
 
+        public async Task Reset(Guid bookId)
+        {
+            await _bookGenreRelationService.DeleteByBookId(bookId); 
+        }
+
         public void Dispose()
         {
             Dispose(true);

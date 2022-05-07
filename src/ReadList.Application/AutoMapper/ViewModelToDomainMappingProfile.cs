@@ -17,6 +17,7 @@ namespace ReadList.Application.AutoMapper
             #region Book
             CreateMap<BookViewModel, BookModel>();
             CreateMap<CreateBookViewModel, BookModel>();
+            CreateMap<UpdateBookViewModel, BookModel>();
             #endregion
 
             #region BookGenreRelation

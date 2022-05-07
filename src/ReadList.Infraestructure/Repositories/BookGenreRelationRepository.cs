@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -17,6 +18,15 @@ namespace ReadList.Infraestructure.Repositories
         {
             await _context.BookGenreRelation.AddAsync(model);
         
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteByBookId(Guid bookId)
+        {
+            var relationsToBeRemoved = await _context.BookGenreRelation.Where(bgr => bgr.BookId == bookId).ToListAsync();
+
+            _context.BookGenreRelation.RemoveRange(relationsToBeRemoved);
+
             await _context.SaveChangesAsync();
         }
 

@@ -24,6 +24,11 @@ namespace ReadList.Services.Services
             await _repository.Create(model);
         }
 
+        public async Task DeleteByBookId(Guid bookId)
+        {
+            await _repository.DeleteByBookId(bookId);
+        }
+
         public void Dispose()
         {
             Dispose(true);

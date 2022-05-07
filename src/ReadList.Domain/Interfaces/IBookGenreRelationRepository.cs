@@ -4,6 +4,7 @@ namespace ReadList.Domain.Interfaces
 {
     public interface IBookGenreRelationRepository : IDisposable
     {
-         Task Create(BookGenreRelationModel model);
+        Task Create(BookGenreRelationModel model);
+        Task DeleteByBookId(Guid bookId);
     }
 }

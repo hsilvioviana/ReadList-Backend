@@ -34,5 +34,17 @@ namespace ReadList.Api.Controllers
 
             await _service.Create(viewModel);
         }
+
+        [HttpPut("Update/{id}")]
+        [Authorize]
+        public async Task Update([FromBody] UpdateBookViewModel viewModel, string id)
+        {
+            var userId = User.FindFirst("id")?.Value;
+
+            viewModel.UserId = new Guid(userId);
+            viewModel.Id = new Guid(id);
+
+            await _service.Update(viewModel);
+        }
     }
 }
