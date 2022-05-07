@@ -13,6 +13,11 @@ namespace ReadList.Application.AutoMapper
             CreateMap<SignUpViewModel, UserModel>();
             CreateMap<LoginViewModel, UserModel>();
             #endregion
+
+            #region Book
+            CreateMap<BookViewModel, BookModel>();
+            CreateMap<CreateBookViewModel, BookModel>();
+            #endregion
         }
     }
 }

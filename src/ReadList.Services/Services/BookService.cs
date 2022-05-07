@@ -1,11 +1,12 @@
 using AutoMapper;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Interfaces;
+using ReadList.Domain.Models;
 using ReadList.Services.Interfaces;
 
 namespace ReadList.Services.Services
 {
-    public class BookService : IBookService
+    public class BookService : BaseService, IBookService
     {
         protected readonly IBookRepository _repository;
         protected readonly IMapper _mapper;
@@ -21,6 +22,19 @@ namespace ReadList.Services.Services
             var models = await _repository.SearchByUserId(userId);
 
             return _mapper.Map<List<BookViewModel>>(models);
+        }
+
+        public async Task Create(CreateBookViewModel viewModel)
+        {
+            var model =  _mapper.Map<BookModel>(viewModel);
+
+            model.Id = Guid.NewGuid();
+            model.CreatedAt = DateTime.Now;
+            model.UpdatedAt = DateTime.Now;
+
+            await _repository.Create(model);
+
+            
         }
 
         public async Task<List<FormattedBookListViewModel>> SearchDividedByYear(Guid userId)
@@ -56,6 +70,17 @@ namespace ReadList.Services.Services
             list.ForEach(l => l.SetCount());
 
             return list;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _repository?.Dispose();
         }
     }
 }

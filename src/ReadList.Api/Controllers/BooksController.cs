@@ -16,12 +16,23 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
-        [HttpPost("Search")]
+        [HttpGet("Search")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> Search()
         {
             var userId = User.FindFirst("id")?.Value;
             return await _service.SearchDividedByYear(new Guid(userId));
+        }
+
+        [HttpPost("Create")]
+        [Authorize]
+        public async Task Create([FromBody] CreateBookViewModel viewModel)
+        {
+            var userId = User.FindFirst("id")?.Value;
+
+            viewModel.UserId = new Guid(userId);
+
+            await _service.Create(viewModel);
         }
     }
 }
