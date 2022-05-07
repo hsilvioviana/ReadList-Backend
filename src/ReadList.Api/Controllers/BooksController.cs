@@ -6,7 +6,7 @@ using ReadList.Services.Interfaces;
 namespace ReadList.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/books")]
     public class BooksController : ControllerBase
     {
         protected readonly IBookService _service;
@@ -16,7 +16,7 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
-        [HttpGet("Search")]
+        [HttpGet("search")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> Search()
         {
@@ -24,7 +24,7 @@ namespace ReadList.Api.Controllers
             return await _service.SearchDividedByYear(new Guid(userId));
         }
 
-        [HttpPost("Create")]
+        [HttpPost("create")]
         [Authorize]
         public async Task Create([FromBody] CreateBookViewModel viewModel)
         {
@@ -35,7 +35,7 @@ namespace ReadList.Api.Controllers
             await _service.Create(viewModel);
         }
 
-        [HttpPut("Update/{id}")]
+        [HttpPut("update/{id}")]
         [Authorize]
         public async Task Update([FromBody] UpdateBookViewModel viewModel, string id)
         {
@@ -45,6 +45,21 @@ namespace ReadList.Api.Controllers
             viewModel.Id = new Guid(id);
 
             await _service.Update(viewModel);
+        }
+
+        [HttpDelete("delete/{id}")]
+        [Authorize]
+        public async Task Delete(string id)
+        {
+            var userId = User.FindFirst("id")?.Value;
+
+            var viewModel = new DeleteBookViewModel()
+            {
+                UserId = new Guid(userId),
+                Id = new Guid(id) 
+            };
+
+            await _service.Delete(viewModel);
         }
     }
 }

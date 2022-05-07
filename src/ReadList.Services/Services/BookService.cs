@@ -64,6 +64,17 @@ namespace ReadList.Services.Services
             await _genreService.CreateMany(viewModel.Genres, model.Id);
         }
 
+        public async Task Delete(DeleteBookViewModel viewModel)
+        {
+            var model =  await _repository.Find(viewModel.Id);
+
+            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para deletar este livro.");
+
+            await _repository.Delete(model.Id);
+        }
+
         public async Task<List<FormattedBookListViewModel>> SearchDividedByYear(Guid userId)
         {
             var models = await _repository.SearchByUserId(userId);

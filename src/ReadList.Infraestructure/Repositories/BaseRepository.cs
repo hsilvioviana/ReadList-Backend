@@ -41,6 +41,7 @@ namespace ReadList.Infraestructure.Repositories
 
         public virtual async Task Delete(Guid id)
         {
+            Db.ChangeTracker.Clear();
             DbSet.Remove(new TModel { Id = id });
             await SaveChanges();
         }

@@ -6,7 +6,7 @@ using ReadList.Services.Interfaces;
 namespace ReadList.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/users")]
 public class UserController : ControllerBase
 {
     IUserService _service;
@@ -15,14 +15,14 @@ public class UserController : ControllerBase
         _service = service;
     }
 
-    [HttpPost("SignUp")]
+    [HttpPost("signup")]
     [AllowAnonymous]
     public async Task<AuthenticationResponse> Signup([FromQuery] SignUpViewModel viewModel)
     {
         return await _service.SignUp(viewModel);
     }
 
-    [HttpPost("Login")]
+    [HttpPost("login")]
     [AllowAnonymous]
     public async Task<AuthenticationResponse> Login([FromQuery] LoginViewModel viewModel)
     {
