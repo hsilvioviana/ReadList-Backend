@@ -9,11 +9,13 @@ namespace ReadList.Services.Services
     public class BookService : BaseService, IBookService
     {
         protected readonly IBookRepository _repository;
+        protected readonly IGenreService _genreService;
         protected readonly IMapper _mapper;
         
-        public BookService(IBookRepository repository, IMapper mapper)
+        public BookService(IBookRepository repository, IGenreService genreService, IMapper mapper)
         {
             _repository = repository;
+            _genreService = genreService;
             _mapper = mapper;
         }
 
@@ -34,7 +36,7 @@ namespace ReadList.Services.Services
 
             await _repository.Create(model);
 
-            
+            await _genreService.CreateMany(viewModel.Genres, model.Id);
         }
 
         public async Task<List<FormattedBookListViewModel>> SearchDividedByYear(Guid userId)

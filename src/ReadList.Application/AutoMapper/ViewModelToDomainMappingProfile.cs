@@ -18,6 +18,15 @@ namespace ReadList.Application.AutoMapper
             CreateMap<BookViewModel, BookModel>();
             CreateMap<CreateBookViewModel, BookModel>();
             #endregion
+
+            #region BookGenreRelation
+            CreateMap<BookGenreRelationViewModel, BookGenreRelationModel>();
+            CreateMap<CreateBookGenreRelationViewModel, BookGenreRelationModel>();
+            #endregion
+
+            #region Genre
+            CreateMap<GenreViewModel, GenreModel>();
+            #endregion
         }
     }
 }

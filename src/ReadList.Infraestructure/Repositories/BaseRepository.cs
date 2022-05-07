@@ -15,7 +15,7 @@ namespace ReadList.Infraestructure.Repositories
             DbSet = Db.Set<TModel>();
         }
 
-        public virtual async Task<IList<TModel>> Search() =>
+        public virtual async Task<List<TModel>> Search() =>
             await DbSet.AsNoTracking().ToListAsync();
 
         public virtual async Task<TModel> Find(Guid id) =>
