@@ -1,4 +1,5 @@
 using AutoMapper;
+using ReadList.Application.Validations;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
@@ -28,6 +29,8 @@ namespace ReadList.Services.Services
 
         public async Task Create(CreateBookViewModel viewModel)
         {
+            Validate(new CreateBookValidation(), viewModel);
+
             var model =  _mapper.Map<BookModel>(viewModel);
 
             model.Id = Guid.NewGuid();
@@ -41,6 +44,8 @@ namespace ReadList.Services.Services
 
         public async Task Update(UpdateBookViewModel viewModel)
         {
+            Validate(new UpdateBookValidation(), viewModel);
+
             var model =  await _repository.Find(viewModel.Id);
 
             ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");

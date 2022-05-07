@@ -7,7 +7,7 @@ namespace ReadList.Infraestructure.Repositories
 {
     public class BookRepository : BaseRepository<BookModel>, IBookRepository
     {
-        PostgresDbContext _context;
+        protected readonly PostgresDbContext _context;
 
         public BookRepository(PostgresDbContext context) : base(context)
         {

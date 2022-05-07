@@ -6,7 +6,7 @@ namespace ReadList.Infraestructure.Repositories
 {
     public class GenreRepository : BaseRepository<GenreModel>, IGenreRepository
     {
-        PostgresDbContext _context;
+        protected readonly PostgresDbContext _context;
 
         public GenreRepository(PostgresDbContext context) : base(context)
         {

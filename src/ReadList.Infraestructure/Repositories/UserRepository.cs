@@ -7,7 +7,7 @@ namespace ReadList.Infraestructure.Repositories
 {
     public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
-        PostgresDbContext _context;
+        protected readonly PostgresDbContext _context;
 
         public UserRepository(PostgresDbContext context) : base(context)
         {
