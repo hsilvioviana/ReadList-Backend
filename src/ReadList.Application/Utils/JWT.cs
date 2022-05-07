@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels;
 
 namespace ReadList.Application.Utils
 {

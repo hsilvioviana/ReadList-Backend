@@ -15,10 +15,16 @@ namespace ReadList.CrossCutting
         {
             #region Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookGenreRelationRepository, BookGenreRelationRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
             #endregion
 
             #region Services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookGenreRelationService, BookGenreRelationService>();
+            services.AddScoped<IGenreService, GenreService>();
             #endregion
 
             #region DbContexts

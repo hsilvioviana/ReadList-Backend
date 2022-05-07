@@ -7,7 +7,7 @@ namespace ReadList.Infraestructure.Repositories
 {
     public class UserRepository : BaseRepository<UserModel>, IUserRepository
     {
-        PostgresDbContext _context;
+        protected readonly PostgresDbContext _context;
 
         public UserRepository(PostgresDbContext context) : base(context)
         {
@@ -16,12 +16,12 @@ namespace ReadList.Infraestructure.Repositories
 
         public async Task<UserModel> SearchByUsername(string username)
         {
-            return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync() ?? new UserModel();
+            return await DbSet.Where(U => U.Username == username).FirstOrDefaultAsync();
         }
 
         public async Task<UserModel> SearchByEmail(string email)
         {
-            return await DbSet.Where(U => U.Email == email).FirstOrDefaultAsync() ?? new UserModel();
+            return await DbSet.Where(U => U.Email == email).FirstOrDefaultAsync();
         }
     }
 }

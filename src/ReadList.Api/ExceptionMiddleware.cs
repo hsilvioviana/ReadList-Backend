@@ -2,11 +2,11 @@ using System.Text.Json;
 
 namespace ReadList.Api
 {
-    public class ErrorHandlerMiddleware
+    public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ErrorHandlerMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
         }

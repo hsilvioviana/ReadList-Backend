@@ -15,11 +15,11 @@ namespace ReadList.Infraestructure.Repositories
             DbSet = Db.Set<TModel>();
         }
 
-        public virtual async Task<IList<TModel>> Search() =>
+        public virtual async Task<List<TModel>> Search() =>
             await DbSet.AsNoTracking().ToListAsync();
 
         public virtual async Task<TModel> Find(Guid id) =>
-            await DbSet.FindAsync(id) ?? new TModel();        
+            await DbSet.FindAsync(id);        
 
         public virtual async Task Create(TModel model)
         {
@@ -41,6 +41,7 @@ namespace ReadList.Infraestructure.Repositories
 
         public virtual async Task Delete(Guid id)
         {
+            Db.ChangeTracker.Clear();
             DbSet.Remove(new TModel { Id = id });
             await SaveChanges();
         }

@@ -14,20 +14,20 @@ namespace ReadList.Services.Services
             }
         }
 
-        public void CheckVariable<T>(T variable, string TypeOfComparison, T expectedValue, string errorMessage)
+        public void ThrowErrorWhen<T>(T value1, string TypeOfComparison, T value2, string errorMessage)
         {
-            var passed = false;
+            var throwError = false;
 
             if (TypeOfComparison == "Equal")
             {
-                passed = EqualityComparer<T>.Default.Equals(variable, expectedValue);
+                throwError = EqualityComparer<T>.Default.Equals(value1, value2);
             }
             else if (TypeOfComparison == "NotEqual")
             {
-                passed = !EqualityComparer<T>.Default.Equals(variable, expectedValue);
+                throwError = !EqualityComparer<T>.Default.Equals(value1, value2);
             }
 
-            if (!passed)
+            if (throwError)
             {
                 throw new Exception(errorMessage);
             }

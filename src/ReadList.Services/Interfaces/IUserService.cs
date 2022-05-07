@@ -1,9 +1,8 @@
-using ReadList.Application.ViewModels.Authentication;
-using ReadList.Application.ViewModels.User;
+using ReadList.Application.ViewModels;
 
 namespace ReadList.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IDisposable
     {
         Task<AuthenticationResponse> SignUp(SignUpViewModel viewModel);
         Task<AuthenticationResponse> Login(LoginViewModel viewModel);

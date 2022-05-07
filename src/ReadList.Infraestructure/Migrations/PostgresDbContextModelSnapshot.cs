@@ -22,6 +22,110 @@ namespace ReadList.Infraestructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ReadList.Domain.Models.BookGenreRelationModel", b =>
+                {
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("book_id");
+
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("genre_id");
+
+                    b.HasKey("BookId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("books_genres_relations", "readlist");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("author");
+
+                    b.Property<string>("CountryOfOrigin")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country_of_origin");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsFiction")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_fiction");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<int>("NumberOfPages")
+                        .HasColumnType("integer")
+                        .HasColumnName("number_of_pages");
+
+                    b.Property<int>("ReadingYear")
+                        .HasColumnType("integer")
+                        .HasColumnName("reading_year");
+
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("integer")
+                        .HasColumnName("release_year");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("books", "readlist");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.GenreModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("genres", "readlist");
+                });
+
             modelBuilder.Entity("ReadList.Domain.Models.UserModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -55,6 +159,51 @@ namespace ReadList.Infraestructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users", "readlist");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.BookGenreRelationModel", b =>
+                {
+                    b.HasOne("ReadList.Domain.Models.BookModel", "Book")
+                        .WithMany("BookGenreRelations")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReadList.Domain.Models.GenreModel", "Genre")
+                        .WithMany("BookGenreRelations")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
+                {
+                    b.HasOne("ReadList.Domain.Models.UserModel", "User")
+                        .WithMany("Books")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.BookModel", b =>
+                {
+                    b.Navigation("BookGenreRelations");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.GenreModel", b =>
+                {
+                    b.Navigation("BookGenreRelations");
+                });
+
+            modelBuilder.Entity("ReadList.Domain.Models.UserModel", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
