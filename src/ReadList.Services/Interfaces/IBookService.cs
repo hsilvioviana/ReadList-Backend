@@ -5,6 +5,7 @@ namespace ReadList.Services.Interfaces
     public interface IBookService : IDisposable
     {
         Task<List<BookViewModel>> Search(Guid userId);
+        Task<BookViewModel> Find(FindBookViewModel viewModel);
         Task Create(CreateBookViewModel viewModel);
         Task Update(UpdateBookViewModel viewModel);
         Task Delete(DeleteBookViewModel viewModel);

@@ -24,6 +24,21 @@ namespace ReadList.Api.Controllers
             return await _service.SearchDividedByYear(new Guid(userId));
         }
 
+        [HttpGet("search/{id}")]
+        [Authorize]
+        public async Task<BookViewModel> Find(string id)
+        {
+            var userId = User.FindFirst("id")?.Value;
+
+            var viewModel = new FindBookViewModel()
+            {
+                UserId = new Guid(userId),
+                Id = new Guid(id) 
+            };
+
+            return await _service.Find(viewModel);
+        }
+
         [HttpPost("create")]
         [Authorize]
         public async Task Create([FromBody] CreateBookViewModel viewModel)

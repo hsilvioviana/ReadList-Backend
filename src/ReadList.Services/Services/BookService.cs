@@ -27,6 +27,17 @@ namespace ReadList.Services.Services
             return _mapper.Map<List<BookViewModel>>(models);
         }
 
+        public async Task<BookViewModel> Find(FindBookViewModel viewModel)
+        {
+            var model = await _repository.Find(viewModel.Id);
+
+            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para visualizar este livro.");
+
+            return _mapper.Map<BookViewModel>(model);
+        }
+
         public async Task Create(CreateBookViewModel viewModel)
         {
             Validate(new CreateBookValidation(), viewModel);
