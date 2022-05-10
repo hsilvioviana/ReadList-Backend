@@ -16,12 +16,76 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("resume")]
         [Authorize]
-        public async Task<StatisticsViewModel> Get()
+        public async Task<StatisticsResumeViewModel> StatisticsResume()
         {
             var userId = User.FindFirst("id")?.Value;
-            return await _service.Statistics(new Guid(userId));
+            return await _service.StatisticsResume(new Guid(userId));
+        }
+
+        [HttpGet("years-with-more-books")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> YearsWithMoreBooks()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.YearsWithMoreBooks(new Guid(userId));
+        }
+
+        [HttpGet("most-read-authors")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> MostReadAuthors()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.MostReadAuthors(new Guid(userId));
+        }
+
+        [HttpGet("most-read-types")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> MostReadTypes()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.MostReadTypes(new Guid(userId));
+        }
+
+        [HttpGet("most-read-genres")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> MostReadGenres()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.MostReadGenres(new Guid(userId));
+        }
+
+        [HttpGet("most-read-countries")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> MostReadCountries()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.MostReadCountries(new Guid(userId));
+        }
+
+        [HttpGet("most-read-languages")]
+        [Authorize]
+        public async Task<List<FormattedBookListViewModel>> MostReadLanguages()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.MostReadLanguages(new Guid(userId));
+        }
+
+        [HttpGet("oldest-books")]
+        [Authorize]
+        public async Task<List<BookViewModel>> OldestBooks()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.OldestBooks(new Guid(userId));
+        }
+
+        [HttpGet("biggest-books")]
+        [Authorize]
+        public async Task<List<BookViewModel>> BiggestBooks()
+        {
+            var userId = User.FindFirst("id")?.Value;
+            return await _service.BiggestBooks(new Guid(userId));
         }
     }
 }
