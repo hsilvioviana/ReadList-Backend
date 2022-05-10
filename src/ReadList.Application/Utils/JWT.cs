@@ -29,7 +29,7 @@ namespace ReadList.Application.Utils
                     new Claim("username", user.Username),
                     new Claim("email", user.Email)
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddMonths(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
 

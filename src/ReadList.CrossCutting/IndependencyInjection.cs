@@ -25,6 +25,7 @@ namespace ReadList.CrossCutting
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookGenreRelationService, BookGenreRelationService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
             #endregion
 
             #region DbContexts
