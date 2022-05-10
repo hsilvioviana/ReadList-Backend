@@ -6,12 +6,14 @@ namespace ReadList.Services.Services
     public class StatisticsService : BaseService, IStatisticsService
     {
         protected readonly IBookService _bookService;
+        protected readonly IGenreService _genreService;
         
-        public StatisticsService(IBookService bookService)
+        public StatisticsService(IBookService bookService, IGenreService genreService)
         {
             _bookService = bookService;
+            _genreService = genreService;
         }
-
+  
         public async Task<StatisticsViewModel> Statistics(Guid userId)
         {
             var books = await _bookService.Search(userId);
@@ -32,7 +34,24 @@ namespace ReadList.Services.Services
 
         private static List<FormattedBookListViewModel> YearsWithMoreBooks(List<BookViewModel> books)
         {
-            return new List<FormattedBookListViewModel>();
+            var years = books.GroupBy(b => b.ReadingYear);
+
+            var list = new List<FormattedBookListViewModel>();
+
+            foreach(var year in years)
+            {
+                var includeYear = new FormattedBookListViewModel()
+                {
+                    Key = year.Key.ToString(),
+                    Books = year.ToList(),
+                };
+
+                includeYear.SetCount();
+
+                list.Add(includeYear);
+            }
+
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<FormattedBookListViewModel> MostReadAuthors(List<BookViewModel> books)
@@ -54,27 +73,107 @@ namespace ReadList.Services.Services
                 list.Add(includeAuthor);
             }
 
-            return list;
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<FormattedBookListViewModel> MostReadTypes(List<BookViewModel> books)
         {
-            return new List<FormattedBookListViewModel>();
+            var types = books.GroupBy(b => b.IsFiction ? "Ficção" : "Não-Ficção");
+
+            var list = new List<FormattedBookListViewModel>();
+
+            foreach(var type in types)
+            {
+                var includeType = new FormattedBookListViewModel()
+                {
+                    Key = type.Key,
+                    Books = type.ToList(),
+                };
+
+                includeType.SetCount();
+
+                list.Add(includeType);
+            }
+
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<FormattedBookListViewModel> MostReadGenres(List<BookViewModel> books)
         {
-            return new List<FormattedBookListViewModel>();
+            var list = new List<FormattedBookListViewModel>();
+
+            var registeredGenres = new List<string>();
+
+            foreach(var book in books)
+            {
+                foreach(var genre in book.Genres)
+                {
+                    if (registeredGenres.Contains(genre))
+                    {
+                        var indexOfTheGenre = registeredGenres.IndexOf(genre);
+
+                        list[indexOfTheGenre].Books.Add(book);
+                    }
+                    else
+                    {
+                        registeredGenres.Add(genre);
+
+                        list.Add(new FormattedBookListViewModel()
+                        {
+                            Key = genre,
+                            Books = new List<BookViewModel>() { book }
+                        });
+                    }
+                }
+            }
+
+            list.ForEach(l => l.SetCount());
+
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<FormattedBookListViewModel> MostReadCountries(List<BookViewModel> books)
         {
-            return new List<FormattedBookListViewModel>();
+            var countries = books.GroupBy(b => b.Language);
+
+            var list = new List<FormattedBookListViewModel>();
+
+            foreach(var country in countries)
+            {
+                var includeCountry = new FormattedBookListViewModel()
+                {
+                    Key = country.Key,
+                    Books = country.ToList(),
+                };
+
+                includeCountry.SetCount();
+
+                list.Add(includeCountry);
+            }
+
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<FormattedBookListViewModel> MostReadLanguages(List<BookViewModel> books)
         {
-            return new List<FormattedBookListViewModel>();
+            var languages = books.GroupBy(b => b.Language);
+
+            var list = new List<FormattedBookListViewModel>();
+
+            foreach(var language in languages)
+            {
+                var includeLanguage = new FormattedBookListViewModel()
+                {
+                    Key = language.Key,
+                    Books = language.ToList(),
+                };
+
+                includeLanguage.SetCount();
+
+                list.Add(includeLanguage);
+            }
+
+            return list.OrderByDescending(l => l.Count).ToList();
         }
 
         private static List<BookViewModel> OldestBooks(List<BookViewModel> books)
