@@ -40,6 +40,23 @@ builder.Services.AddSwaggerGen(setup =>
     {
         { jwtSecurityScheme, Array.Empty<string>() }
     });
+
+    setup.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Title = "ReadList API",
+        Description = "Com ReadList um usuário poderá criar uma conta e salvar livros lidos, o programa irá gerar estátisticas baseadas nos livros cadastrados (Autores mais lidos, Gêneros mais lidos, Anos com maiores leituras, etc...). Este programa foi construído para que um usuário possa ter um registro de todos os livros lidos e conseguir ver como sua relação com a leitura mudou com o passar dos anos, se ele mudou sua prefêrencia em relação com os gêneros literários ou se a quantidade de livros lidos por ano sofreu alguma alteração com o passar do tempo, por exemplo. Logo abaixo, está todos os endpoints do backend para o seu uso.",
+        Version = "v1",
+        Contact = new OpenApiContact()
+        {
+            Name = "Silvio Viana",
+            Email = "hsilvioviana@hotmail.com",
+            Url = new Uri("https://www.linkedin.com/in/hsilvioviana/")
+        }
+    });
+
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, "ReadList.Api.xml");
+
+    setup.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -16,6 +16,12 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
+        // GET api/books/search
+        /// <summary>
+        /// Busca de livros divididos por ano.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("search")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> Search()
@@ -24,6 +30,13 @@ namespace ReadList.Api.Controllers
             return await _service.SearchDividedByYear(new Guid(userId));
         }
 
+        // GET api/books/search/{id}
+        /// <summary>
+        /// Busca de livro por id.
+        /// </summary>
+        /// <param name="id">Id do livro</param>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("search/{id}")]
         [Authorize]
         public async Task<BookViewModel> Find(string id)
@@ -39,6 +52,32 @@ namespace ReadList.Api.Controllers
             return await _service.Find(viewModel);
         }
 
+        // POST api/books/create
+        /// <summary>
+        /// Cadastro de livro.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de body:
+        /// 
+        ///     {
+        ///         "title": "O Pequeno Príncipe",
+        ///         "author": "Antoine de Saint-Exupéry",
+        ///         "releaseYear": 1943,
+        ///         "readingYear": 2022,
+        ///         "isFiction": true,
+        ///         "genres": [
+        ///             "Romance",
+        ///             "Aventura", 
+        ///             "Infantil"
+        ///         ],
+        ///         "numberOfPages": 132,
+        ///         "countryOfOrigin": "França",
+        ///         "language": "Português"
+        ///     }
+        /// </remarks>
+        /// <param name="viewModel">Dados de criação do livro.</param>
+        /// <response code="200">Cadastro realizado com sucesso.</response>
+        /// <response code="400">Erro no cadastro.</response>
         [HttpPost("create")]
         [Authorize]
         public async Task Create([FromBody] CreateBookViewModel viewModel)
@@ -50,6 +89,34 @@ namespace ReadList.Api.Controllers
             await _service.Create(viewModel);
         }
 
+        // PUT api/books/update/{id}
+        /// <summary>
+        /// Atualização de livro.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de body:
+        /// 
+        ///     {
+        ///         "title": "O Pequeno Príncipe",
+        ///         "author": "Antoine de Saint-Exupéry",
+        ///         "releaseYear": 1943,
+        ///         "readingYear": 2022,
+        ///         "isFiction": true,
+        ///         "genres": [
+        ///             "Romance",
+        ///             "Aventura", 
+        ///             "Infantil",
+        ///             "Filosofia"
+        ///         ],
+        ///         "numberOfPages": 132,
+        ///         "countryOfOrigin": "França",
+        ///         "language": "Português"
+        ///     }
+        /// </remarks>
+        /// <param name="viewModel">Dados de atualização do livro.</param>
+        /// <param name="id">Id do livro.</param>
+        /// <response code="200">Atualização realizada com sucesso.</response>
+        /// <response code="400">Erro na atualização.</response>
         [HttpPut("update/{id}")]
         [Authorize]
         public async Task Update([FromBody] UpdateBookViewModel viewModel, string id)
@@ -62,6 +129,13 @@ namespace ReadList.Api.Controllers
             await _service.Update(viewModel);
         }
 
+        // DELETE api/books/delete/{id}
+        /// <summary>
+        /// Remoção de livro por id.
+        /// </summary>
+        /// <param name="id">Id do livro.</param>
+        /// <response code="200">Remoção realizada com sucesso.</response>
+        /// <response code="400">Erro na remoção.</response>
         [HttpDelete("delete/{id}")]
         [Authorize]
         public async Task Delete(string id)

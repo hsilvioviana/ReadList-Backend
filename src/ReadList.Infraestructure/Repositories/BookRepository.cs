@@ -23,5 +23,12 @@ namespace ReadList.Infraestructure.Repositories
                 .ThenBy(b => b.CreatedAt)
             .ToListAsync();
         }
+
+        public async override Task<BookModel> Find(Guid id)
+        {
+            return await _context.Book.Include(b => b.BookGenreRelations)
+                                            .ThenInclude(bgr => bgr.Genre)
+                                        .FirstOrDefaultAsync(b => b.Id == id);
+        }
     }
 }

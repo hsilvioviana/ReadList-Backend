@@ -16,16 +16,48 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
+        // POST api/users/signup
+        /// <summary>
+        /// Cadastro de usuário.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de body:
+        /// 
+        ///     {
+        ///         "username": "joao123",
+        ///         "email": "joao123@email.com",
+        ///         "password": "123456"
+        ///     }
+        /// </remarks>
+        /// <param name="viewModel">Dados de criação</param>
+        /// <response code="200">Cadastro realizado com sucesso.</response>
+        /// <response code="400">Erro no cadastro.</response>
         [HttpPost("signup")]
         [AllowAnonymous]
-        public async Task<AuthenticationResponse> Signup([FromQuery] SignUpViewModel viewModel)
+        public async Task<AuthenticationResponse> Signup([FromBody] SignUpViewModel viewModel)
         {
             return await _service.SignUp(viewModel);
         }
 
+
+        // POST api/users/login
+        /// <summary>
+        /// Login de usuário.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de body:
+        /// 
+        ///     {
+        ///         "username": "joao123",
+        ///         "password": "123456"
+        ///     }
+        /// </remarks>
+        /// <param name="viewModel">Dados de login.</param>
+        /// <response code="200">Login realizado com sucesso.</response>
+        /// <response code="400">Erro no login.</response>
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<AuthenticationResponse> Login([FromQuery] LoginViewModel viewModel)
+        public async Task<AuthenticationResponse> Login([FromBody] LoginViewModel viewModel)
         {
             return await _service.Login(viewModel);
         }
