@@ -16,6 +16,12 @@ namespace ReadList.Api.Controllers
             _service = service;
         }
 
+        // GET api/statistics/resume
+        /// <summary>
+        /// Resumo das estatísticas.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("resume")]
         [Authorize]
         public async Task<StatisticsResumeViewModel> StatisticsResume()
@@ -24,6 +30,12 @@ namespace ReadList.Api.Controllers
             return await _service.StatisticsResume(new Guid(userId));
         }
 
+        // GET api/statistics/years-with-more-book
+        /// <summary>
+        /// Anos com mais livros.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("years-with-more-books")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> YearsWithMoreBooks()
@@ -32,6 +44,12 @@ namespace ReadList.Api.Controllers
             return await _service.YearsWithMoreBooks(new Guid(userId));
         }
 
+        // GET api/statistics/most-read-authors
+        /// <summary>
+        /// Autores mais lidos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("most-read-authors")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> MostReadAuthors()
@@ -40,6 +58,12 @@ namespace ReadList.Api.Controllers
             return await _service.MostReadAuthors(new Guid(userId));
         }
 
+        // GET api/statistics/most-read-types
+        /// <summary>
+        /// Tipos mais lidos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("most-read-types")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> MostReadTypes()
@@ -48,6 +72,12 @@ namespace ReadList.Api.Controllers
             return await _service.MostReadTypes(new Guid(userId));
         }
 
+        // GET api/statistics/most-read-genres
+        /// <summary>
+        /// Gêneros mais lidos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("most-read-genres")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> MostReadGenres()
@@ -56,6 +86,12 @@ namespace ReadList.Api.Controllers
             return await _service.MostReadGenres(new Guid(userId));
         }
 
+        // GET api/statistics/most-read-countries
+        /// <summary>
+        /// Países mais lidos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("most-read-countries")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> MostReadCountries()
@@ -64,6 +100,12 @@ namespace ReadList.Api.Controllers
             return await _service.MostReadCountries(new Guid(userId));
         }
 
+        // GET api/statistics/most-read-languages
+        /// <summary>
+        /// Idiomas mais lidos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("most-read-languages")]
         [Authorize]
         public async Task<List<FormattedBookListViewModel>> MostReadLanguages()
@@ -72,6 +114,12 @@ namespace ReadList.Api.Controllers
             return await _service.MostReadLanguages(new Guid(userId));
         }
 
+        // GET api/statistics/oldest-books
+        /// <summary>
+        /// Livros mais antigos.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("oldest-books")]
         [Authorize]
         public async Task<List<BookViewModel>> OldestBooks()
@@ -80,6 +128,12 @@ namespace ReadList.Api.Controllers
             return await _service.OldestBooks(new Guid(userId));
         }
 
+        // GET api/statistics/biggest-books
+        /// <summary>
+        /// Maiores livros.
+        /// </summary>
+        /// <response code="200">Busca realizada com sucesso.</response>
+        /// <response code="400">Erro na busca.</response>
         [HttpGet("biggest-books")]
         [Authorize]
         public async Task<List<BookViewModel>> BiggestBooks()
