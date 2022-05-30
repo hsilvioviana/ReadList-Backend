@@ -15,11 +15,15 @@ namespace ReadList.Infraestructure.Repositories
             DbSet = Db.Set<TModel>();
         }
 
-        public virtual async Task<List<TModel>> Search() =>
-            await DbSet.AsNoTracking().ToListAsync();
+        public virtual async Task<List<TModel>> Search()
+        { 
+            return await DbSet.AsNoTracking().ToListAsync();
+        }
 
-        public virtual async Task<TModel> Find(Guid id) =>
-            await DbSet.FindAsync(id);        
+        public virtual async Task<TModel> Find(Guid id)
+        {
+            return await DbSet.FindAsync(id);        
+        }
 
         public virtual async Task Create(TModel model)
         {
