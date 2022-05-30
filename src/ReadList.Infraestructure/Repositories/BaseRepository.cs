@@ -9,7 +9,7 @@ namespace ReadList.Infraestructure.Repositories
         protected readonly DbContext Db;
         protected readonly DbSet<TModel> DbSet;
 
-        protected BaseRepository(DbContext context)
+        public BaseRepository(DbContext context)
         {
             Db = context;
             DbSet = Db.Set<TModel>();
@@ -35,6 +35,7 @@ namespace ReadList.Infraestructure.Repositories
 
         public virtual async Task Update(TModel model)
         {
+            Db.ChangeTracker.Clear();
             DbSet.Update(model);
             await SaveChanges();
         }
