@@ -7,10 +7,10 @@ using Xunit;
 
 namespace ReadList.UnitTests.Repositories.Book
 {
-    public class Find
+    public class DeleteByBookId
     {
-        private static readonly Guid _bookId = Guid.NewGuid();
         private static readonly Guid _userId = Guid.NewGuid();
+        private static readonly Guid _bookId = Guid.NewGuid();
 
         [Fact]
         public async Task Find_WhenBookNotFound()
@@ -45,7 +45,7 @@ namespace ReadList.UnitTests.Repositories.Book
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("Find");
+            builder.UseInMemoryDatabase("BookRepository.Find");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 

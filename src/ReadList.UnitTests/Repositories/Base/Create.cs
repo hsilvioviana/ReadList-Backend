@@ -49,7 +49,7 @@ namespace ReadList.UnitTests.Repositories.Base
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("Create");
+            builder.UseInMemoryDatabase("BaseRepository.Create");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 

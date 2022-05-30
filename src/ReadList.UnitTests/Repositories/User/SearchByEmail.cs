@@ -42,9 +42,9 @@ namespace ReadList.UnitTests.Repositories.User
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("SearchByEmail");
+            builder.UseInMemoryDatabase("UserRepository.SearchByEmail");
             options = builder.Options;
-            PostgresDbContext context = new PostgresDbContext(options);
+            var context = new PostgresDbContext(options);
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

@@ -70,7 +70,7 @@ namespace ReadList.UnitTests.Repositories.Base
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("Delete");
+            builder.UseInMemoryDatabase("BaseRepository.Delete");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 

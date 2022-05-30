@@ -64,7 +64,7 @@ namespace ReadList.UnitTests.Repositories.Base
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("Search");
+            builder.UseInMemoryDatabase("BaseRepository.Search");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 

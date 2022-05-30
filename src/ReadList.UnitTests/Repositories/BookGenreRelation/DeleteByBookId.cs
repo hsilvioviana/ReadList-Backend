@@ -5,52 +5,54 @@ using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
 using Xunit;
 
-namespace ReadList.UnitTests.Repositories.Book
+namespace ReadList.UnitTests.Repositories.BookGenreRelation
 {
-    public class SearchByUserId
+    public class DeleteByBookId
     {
         private static readonly Guid _userId = Guid.NewGuid();
         private static readonly Guid _bookId = Guid.NewGuid();
+        private static PostgresDbContext _context;
 
         [Fact]
-        public async Task SearchByUserId_WhenBooksNotFound()
+        public async Task DeleteByBookId_WhenBookNotFound()
         {
             // Arrange
             var repository = Repository();
 
             // Act
-            var books = await repository.SearchByUserId(Guid.NewGuid());
+            await repository.DeleteByBookId(Guid.NewGuid());
+
+            var relations = _context.BookGenreRelation.ToList();
 
             // Assert
-            Assert.Empty(books);
+            Assert.Equal(2, relations.Count);
         }
 
         [Fact]
-        public async Task SearchByUserId_Success()
+        public async Task DeleteByBookId_Success()
         {
             // Arrange
             var repository = Repository();
 
             // Act
-            var books = await repository.SearchByUserId(_userId);
+            await repository.DeleteByBookId(_bookId);
+
+            var relations = _context.BookGenreRelation.ToList();
 
             // Assert
-            Assert.Single(books);
-            Assert.Equal("O Pequeno Príncipe", books[0].Title);
-            Assert.Equal(2, books[0].BookGenreRelations.Count);
-            Assert.Equal("joao123", books[0].User.Username);
+            Assert.Empty(relations);
         }
 
-        private static IBookRepository Repository()
+        private static IBookGenreRelationRepository Repository()
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("BookRepository.SearchByUserId");
+            builder.UseInMemoryDatabase("BookGenreRelationRepository.DeleteByBookId");
             options = builder.Options;
-            var context = new PostgresDbContext(options);
+            _context = new PostgresDbContext(options);
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
 
             var userModel = new UserModel()
             {
@@ -62,7 +64,7 @@ namespace ReadList.UnitTests.Repositories.Book
                 UpdatedAt = DateTime.Now
             };
 
-            context.User.Add(userModel);
+            _context.User.Add(userModel);
 
             var bookModel = new BookModel()
             {
@@ -78,7 +80,7 @@ namespace ReadList.UnitTests.Repositories.Book
                 Language = "Português"
             };
 
-            context.Book.Add(bookModel);
+            _context.Book.Add(bookModel);
 
             var genreModel1 = new GenreModel()
             {
@@ -92,8 +94,8 @@ namespace ReadList.UnitTests.Repositories.Book
                 Name = "Aventura"
             };
 
-            context.Genre.Add(genreModel1);
-            context.Genre.Add(genreModel2);
+            _context.Genre.Add(genreModel1);
+            _context.Genre.Add(genreModel2);
 
 
             var bookGenreRelation1 = new BookGenreRelationModel()
@@ -108,12 +110,12 @@ namespace ReadList.UnitTests.Repositories.Book
                 GenreId = genreModel2.Id
             };
 
-            context.BookGenreRelation.Add(bookGenreRelation1);
-            context.BookGenreRelation.Add(bookGenreRelation2);
+            _context.BookGenreRelation.Add(bookGenreRelation1);
+            _context.BookGenreRelation.Add(bookGenreRelation2);
 
-            context.SaveChanges();
+            _context.SaveChanges();
 
-            return new BookRepository(context);
+            return new BookGenreRelationRepository(_context);
         }
     }
 }
