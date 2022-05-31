@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
-using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
