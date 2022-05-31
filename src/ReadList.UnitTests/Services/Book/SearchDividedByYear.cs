@@ -10,33 +10,36 @@ using Xunit;
 
 namespace ReadList.UnitTests.Services.Book
 {
-    public class Search
+    public class SearchDividedByYear
     {
         private static readonly Guid _userId = Guid.NewGuid();
 
         [Fact]
-        public async Task Search_Success()
+        public async Task SearchDividedByYear_Success()
         {
             // Arrange
             var service = Service();
 
             // Act
-            var books = await service.Search(_userId);
+            var lists = await service.SearchDividedByYear(_userId);
 
             // Assert
-            Assert.NotNull(books);
-            Assert.Equal(2, books.Count);
-            Assert.Equal(2, books[0].Genres.Count);
+            Assert.NotNull(lists);
+            Assert.Equal(2, lists.Count);
+            Assert.Equal(1, lists[0].Count);
+            Assert.Equal("2020", lists[0].Key);
+            Assert.Equal(2, lists[1].Count);
+            Assert.Equal("2021", lists[1].Key);
         }
 
         [Fact]
-        public async Task Search_WithUserWithoutBooks()
+        public async Task SearchDividedByYear_WithUserWithoutBooks()
         {
             // Arrange
             var service = Service();
 
             // Act
-            var books = await service.Search(Guid.NewGuid());
+            var books = await service.SearchDividedByYear(Guid.NewGuid());
 
             // Assert
             Assert.NotNull(books);
@@ -47,7 +50,7 @@ namespace ReadList.UnitTests.Services.Book
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("BookService.Search");
+            builder.UseInMemoryDatabase("BookService.SearchDividedByYear");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 
@@ -97,13 +100,27 @@ namespace ReadList.UnitTests.Services.Book
             var bookModel3 = new BookModel()
             {
                 Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                UserId = _userId,
                 Title = "Flores para Algernon",
                 Author = "Daniel Keyes",
                 ReleaseYear = 1959,
-                ReadingYear = 2022,
+                ReadingYear = 2021,
                 IsFiction = true,
                 NumberOfPages = 288,
+                CountryOfOrigin = "Estados Unidos",
+                Language = "Português"
+            };
+
+            var bookModel4 = new BookModel()
+            {
+                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Title = "Fundação",
+                Author = "Isaac Asimov",
+                ReleaseYear = 1951,
+                ReadingYear = 2022,
+                IsFiction = true,
+                NumberOfPages = 320,
                 CountryOfOrigin = "Estados Unidos",
                 Language = "Português"
             };
@@ -111,6 +128,7 @@ namespace ReadList.UnitTests.Services.Book
             context.Book.Add(bookModel1);
             context.Book.Add(bookModel2);
             context.Book.Add(bookModel3);
+            context.Book.Add(bookModel4);
 
             var genreModel1 = new GenreModel()
             {

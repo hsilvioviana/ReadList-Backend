@@ -11,69 +11,113 @@ using Xunit;
 
 namespace ReadList.UnitTests.Services.Book
 {
-    public class Find
+    public class Update
     {
         private static readonly Guid _userId = Guid.NewGuid();
         private static readonly Guid _bookId = Guid.NewGuid();
 
         [Fact]
-        public async Task Find_Success()
+        public async Task Update_Success()
         {
             // Arrange
             var service = Service();
 
-            var viewModel = new FindBookViewModel()
+            var viewModel = new UpdateBookViewModel()
+            {
+                Id = _bookId,
+                UserId = _userId,
+                Title = "Voo Noturno",
+                Author = "Antoine de Saint-Exupéry",
+                ReleaseYear = 1931,
+                ReadingYear = 2021,
+                IsFiction = true,
+                Genres = new List<string>() { "Romance", "Suspense", "Ação" },
+                NumberOfPages = 112,
+                CountryOfOrigin = "França",
+                Language = "Português"
+            };
+
+            var findViewModel = new FindBookViewModel()
             {
                 Id = _bookId,
                 UserId = _userId
             };
 
             // Act
-            var book = await service.Find(viewModel);
+            var bookBeforeUpdate = await service.Find(findViewModel);
+
+            await service.Update(viewModel);
+
+            var bookAfterUpdate = await service.Find(findViewModel);
 
             // Assert
-            Assert.NotNull(book);
-            Assert.Equal("O Pequeno Príncipe", book.Title);
-            Assert.Equal(2, book.Genres.Count);
+            Assert.Equal(bookBeforeUpdate.Id, bookAfterUpdate.Id);
+
+            Assert.NotNull(bookBeforeUpdate);
+            Assert.Equal("O Pequeno Príncipe", bookBeforeUpdate.Title);
+            Assert.Equal(2, bookBeforeUpdate.Genres.Count);
+
+            Assert.NotNull(bookAfterUpdate);
+            Assert.Equal("Voo Noturno", bookAfterUpdate.Title);
+            Assert.Equal(3, bookAfterUpdate.Genres.Count);
         }
 
         [Fact]
-        public async Task Find_WhenBookNotFound()
+        public async Task Update_WhenBookNotFound()
         {
             // Arrange
             var service = Service();
 
-            var viewModel = new FindBookViewModel()
+            var viewModel = new UpdateBookViewModel()
             {
                 Id = Guid.NewGuid(),
-                UserId = _userId
+                UserId = _userId,
+                Title = "Voo Noturno",
+                Author = "Antoine de Saint-Exupéry",
+                ReleaseYear = 1931,
+                ReadingYear = 2021,
+                IsFiction = true,
+                Genres = new List<string>() { "Romance", "Suspense", "Ação" },
+                NumberOfPages = 112,
+                CountryOfOrigin = "França",
+                Language = "Português"
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Find(viewModel));
+            await Assert.ThrowsAsync<Exception>(async () => await service.Update(viewModel));
         }
 
         [Fact]
-        public async Task Find_WhenTryToFindBookOfAnotherUser()
+        public async Task Update_WhenTryToUpdateBookOfAnotherUser()
         {
             // Arrange
             var service = Service();
 
-            var viewModel = new FindBookViewModel()
+            var viewModel = new UpdateBookViewModel()
             {
                 Id = _bookId,
-                UserId = Guid.NewGuid()
+                UserId = Guid.NewGuid(),
+                Title = "Voo Noturno",
+                Author = "Antoine de Saint-Exupéry",
+                ReleaseYear = 1931,
+                ReadingYear = 2021,
+                IsFiction = true,
+                Genres = new List<string>() { "Romance", "Suspense", "Ação" },
+                NumberOfPages = 112,
+                CountryOfOrigin = "França",
+                Language = "Português"
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Find(viewModel));
+            await Assert.ThrowsAsync<Exception>(async () => await service.Update(viewModel));
         }
+
 
         private static IBookService Service()
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("BookService.Find");
+            builder.UseInMemoryDatabase("BookService.Update");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 
@@ -92,7 +136,7 @@ namespace ReadList.UnitTests.Services.Book
 
             context.User.Add(userModel);
 
-            var bookModel1 = new BookModel()
+            var bookModel = new BookModel()
             {
                 Id = _bookId,
                 UserId = _userId,
@@ -106,37 +150,7 @@ namespace ReadList.UnitTests.Services.Book
                 Language = "Português"
             };
 
-            var bookModel2 = new BookModel()
-            {
-                Id = Guid.NewGuid(),
-                UserId = _userId,
-                Title = "Dom Casmurro",
-                Author = "Machado de Assis",
-                ReleaseYear = 1899,
-                ReadingYear = 2021,
-                IsFiction = true,
-                NumberOfPages = 208,
-                CountryOfOrigin = "Brasil",
-                Language = "Português"
-            };
-
-            var bookModel3 = new BookModel()
-            {
-                Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
-                Title = "Flores para Algernon",
-                Author = "Daniel Keyes",
-                ReleaseYear = 1959,
-                ReadingYear = 2022,
-                IsFiction = true,
-                NumberOfPages = 288,
-                CountryOfOrigin = "Estados Unidos",
-                Language = "Português"
-            };
-
-            context.Book.Add(bookModel1);
-            context.Book.Add(bookModel2);
-            context.Book.Add(bookModel3);
+            context.Book.Add(bookModel);
 
             var genreModel1 = new GenreModel()
             {
@@ -156,13 +170,13 @@ namespace ReadList.UnitTests.Services.Book
 
             var bookGenreRelation1 = new BookGenreRelationModel()
             {
-                BookId = bookModel1.Id,
+                BookId = bookModel.Id,
                 GenreId = genreModel1.Id
             };
 
             var bookGenreRelation2 = new BookGenreRelationModel()
             {
-                BookId = bookModel1.Id,
+                BookId = bookModel.Id,
                 GenreId = genreModel2.Id
             };
 

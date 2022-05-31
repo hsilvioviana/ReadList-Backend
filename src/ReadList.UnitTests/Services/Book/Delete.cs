@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
@@ -10,44 +11,95 @@ using Xunit;
 
 namespace ReadList.UnitTests.Services.Book
 {
-    public class Search
+    public class Delete
     {
         private static readonly Guid _userId = Guid.NewGuid();
+        private static readonly Guid _bookId = Guid.NewGuid();
 
         [Fact]
-        public async Task Search_Success()
+        public async Task Delete_Success()
         {
             // Arrange
             var service = Service();
 
-            // Act
-            var books = await service.Search(_userId);
+            var viewModel = new DeleteBookViewModel()
+            {
+                Id = _bookId,
+                UserId = _userId,
+            };
 
-            // Assert
-            Assert.NotNull(books);
-            Assert.Equal(2, books.Count);
-            Assert.Equal(2, books[0].Genres.Count);
+            var findViewModel = new FindBookViewModel()
+            {
+                Id = _bookId,
+                UserId = _userId
+            };
+
+            // Act
+            var bookBeforeDelete = await service.Find(findViewModel);
+
+            await service.Delete(viewModel);
+
+            // Act & Assert
+            Assert.NotNull(bookBeforeDelete);
+            Assert.Equal("O Pequeno Príncipe", bookBeforeDelete.Title);
+
+            await Assert.ThrowsAsync<Exception>(async () => await service.Find(findViewModel));
         }
 
         [Fact]
-        public async Task Search_WithUserWithoutBooks()
+        public async Task Delete_WhenBookNotFound()
         {
             // Arrange
             var service = Service();
 
-            // Act
-            var books = await service.Search(Guid.NewGuid());
+            var viewModel = new DeleteBookViewModel()
+            {
+                Id = Guid.NewGuid(),
+                UserId = _userId,
+            };
 
-            // Assert
-            Assert.NotNull(books);
-            Assert.Empty(books);
+            // Act & Assert
+            await Assert.ThrowsAsync<Exception>(async () => await service.Delete(viewModel));
         }
+
+        [Fact]
+        public async Task Delete_WhenTryToDeleteBookOfAnotherUser()
+        {
+            // Arrange
+            var service = Service();
+
+            var viewModel = new DeleteBookViewModel()
+            {
+                Id = _bookId,
+                UserId = Guid.NewGuid(),
+            };
+
+            var findViewModel = new FindBookViewModel()
+            {
+                Id = _bookId,
+                UserId = _userId
+            };
+
+            // Act & Assert
+            var bookBeforeTryDelete = await service.Find(findViewModel);
+
+            Assert.NotNull(bookBeforeTryDelete);
+            Assert.Equal("O Pequeno Príncipe", bookBeforeTryDelete.Title);
+
+            await Assert.ThrowsAsync<Exception>(async () => await service.Delete(viewModel));
+
+            var bookAfterTryDelete = await service.Find(findViewModel);
+
+            Assert.NotNull(bookAfterTryDelete);
+            Assert.Equal("O Pequeno Príncipe", bookAfterTryDelete.Title);
+        }
+
 
         private static IBookService Service()
         {
             DbContextOptions<PostgresDbContext> options;
             var builder = new DbContextOptionsBuilder<PostgresDbContext>();
-            builder.UseInMemoryDatabase("BookService.Search");
+            builder.UseInMemoryDatabase("BookService.Delete");
             options = builder.Options;
             var context = new PostgresDbContext(options);
 
@@ -66,9 +118,9 @@ namespace ReadList.UnitTests.Services.Book
 
             context.User.Add(userModel);
 
-            var bookModel1 = new BookModel()
+            var bookModel = new BookModel()
             {
-                Id = Guid.NewGuid(),
+                Id = _bookId,
                 UserId = _userId,
                 Title = "O Pequeno Príncipe",
                 Author = "Antoine de Saint-Exupéry",
@@ -80,37 +132,7 @@ namespace ReadList.UnitTests.Services.Book
                 Language = "Português"
             };
 
-            var bookModel2 = new BookModel()
-            {
-                Id = Guid.NewGuid(),
-                UserId = _userId,
-                Title = "Dom Casmurro",
-                Author = "Machado de Assis",
-                ReleaseYear = 1899,
-                ReadingYear = 2021,
-                IsFiction = true,
-                NumberOfPages = 208,
-                CountryOfOrigin = "Brasil",
-                Language = "Português"
-            };
-
-            var bookModel3 = new BookModel()
-            {
-                Id = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
-                Title = "Flores para Algernon",
-                Author = "Daniel Keyes",
-                ReleaseYear = 1959,
-                ReadingYear = 2022,
-                IsFiction = true,
-                NumberOfPages = 288,
-                CountryOfOrigin = "Estados Unidos",
-                Language = "Português"
-            };
-
-            context.Book.Add(bookModel1);
-            context.Book.Add(bookModel2);
-            context.Book.Add(bookModel3);
+            context.Book.Add(bookModel);
 
             var genreModel1 = new GenreModel()
             {
@@ -130,13 +152,13 @@ namespace ReadList.UnitTests.Services.Book
 
             var bookGenreRelation1 = new BookGenreRelationModel()
             {
-                BookId = bookModel1.Id,
+                BookId = bookModel.Id,
                 GenreId = genreModel1.Id
             };
 
             var bookGenreRelation2 = new BookGenreRelationModel()
             {
-                BookId = bookModel1.Id,
+                BookId = bookModel.Id,
                 GenreId = genreModel2.Id
             };
 
