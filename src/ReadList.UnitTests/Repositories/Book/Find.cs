@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ReadList.UnitTests.Repositories.Book
 {
-    public class DeleteByBookId
+    public class Find
     {
         private static readonly Guid _userId = Guid.NewGuid();
         private static readonly Guid _bookId = Guid.NewGuid();
