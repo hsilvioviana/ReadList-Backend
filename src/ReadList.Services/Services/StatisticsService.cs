@@ -12,7 +12,7 @@ namespace ReadList.Services.Services
             _bookService = bookService;
         }
   
-        public async Task<StatisticsResumeViewModel> StatisticsResume(Guid userId)
+        public async Task<StatisticsResumeViewModel> Resume(Guid userId)
         {
             var books = await _bookService.Search(userId);
 

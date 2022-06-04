@@ -43,6 +43,18 @@ namespace ReadList.UnitTests.Repositories.BookGenreRelation
             Assert.Equal(2, relations.Count);
         }
 
+        [Fact]
+        public async Task Create_WithNullModel()
+        {
+            // Arrange
+            var repository = Repository();
+
+            var bookGenreRelation = new BookGenreRelationModel();
+
+            // Act & Assert
+             await Assert.ThrowsAsync<InvalidOperationException>(async () => await repository.Create(bookGenreRelation));
+        }
+
         private static IBookGenreRelationRepository Repository()
         {
             DbContextOptions<PostgresDbContext> options;
