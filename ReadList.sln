@@ -1,29 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A0104F00-811A-48E5-B0D1-A88CEEF44755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Api", "src\ReadList.Api\ReadList.Api.csproj", "{A29C30CA-66FC-478D-986D-5D10226EC32A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.Api", "src\ReadList.Api\ReadList.Api.csproj", "{A29C30CA-66FC-478D-986D-5D10226EC32A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Application", "src\ReadList.Application\ReadList.Application.csproj", "{C36547C2-412B-4D6D-BF9B-35DD61473C70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.Application", "src\ReadList.Application\ReadList.Application.csproj", "{C36547C2-412B-4D6D-BF9B-35DD61473C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.CrossCutting", "src\ReadList.CrossCutting\ReadList.CrossCutting.csproj", "{51BBE3DF-620B-4013-8A7B-1F3EDAB0F5E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.CrossCutting", "src\ReadList.CrossCutting\ReadList.CrossCutting.csproj", "{51BBE3DF-620B-4013-8A7B-1F3EDAB0F5E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Domain", "src\ReadList.Domain\ReadList.Domain.csproj", "{2DE2D973-DE48-464C-AB44-73368AFE128D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.Domain", "src\ReadList.Domain\ReadList.Domain.csproj", "{2DE2D973-DE48-464C-AB44-73368AFE128D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Infraestructure", "src\ReadList.Infraestructure\ReadList.Infraestructure.csproj", "{6C48ADCA-FBA6-41D6-A064-35A90AC38E45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.Infraestructure", "src\ReadList.Infraestructure\ReadList.Infraestructure.csproj", "{6C48ADCA-FBA6-41D6-A064-35A90AC38E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadList.Services", "src\ReadList.Services\ReadList.Services.csproj", "{F955403D-35EF-47DF-ADF9-C8848D213E07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.Services", "src\ReadList.Services\ReadList.Services.csproj", "{F955403D-35EF-47DF-ADF9-C8848D213E07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadList.UnitTests", "src\ReadList.UnitTests\ReadList.UnitTests.csproj", "{2A14CA8D-66AF-427A-8DD9-207D8A83154B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{820287DC-B8FE-47F9-A9D7-1B1C59F254CE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A29C30CA-66FC-478D-986D-5D10226EC32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -50,6 +54,13 @@ Global
 		{F955403D-35EF-47DF-ADF9-C8848D213E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F955403D-35EF-47DF-ADF9-C8848D213E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F955403D-35EF-47DF-ADF9-C8848D213E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A14CA8D-66AF-427A-8DD9-207D8A83154B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A14CA8D-66AF-427A-8DD9-207D8A83154B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A14CA8D-66AF-427A-8DD9-207D8A83154B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A14CA8D-66AF-427A-8DD9-207D8A83154B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A29C30CA-66FC-478D-986D-5D10226EC32A} = {A0104F00-811A-48E5-B0D1-A88CEEF44755}
@@ -58,5 +69,9 @@ Global
 		{2DE2D973-DE48-464C-AB44-73368AFE128D} = {A0104F00-811A-48E5-B0D1-A88CEEF44755}
 		{6C48ADCA-FBA6-41D6-A064-35A90AC38E45} = {A0104F00-811A-48E5-B0D1-A88CEEF44755}
 		{F955403D-35EF-47DF-ADF9-C8848D213E07} = {A0104F00-811A-48E5-B0D1-A88CEEF44755}
+		{2A14CA8D-66AF-427A-8DD9-207D8A83154B} = {A0104F00-811A-48E5-B0D1-A88CEEF44755}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F7185FE-A42B-4E77-8124-40E224CFC6C6}
 	EndGlobalSection
 EndGlobal

@@ -9,17 +9,21 @@ namespace ReadList.Infraestructure.Repositories
         protected readonly DbContext Db;
         protected readonly DbSet<TModel> DbSet;
 
-        protected BaseRepository(DbContext context)
+        public BaseRepository(DbContext context)
         {
             Db = context;
             DbSet = Db.Set<TModel>();
         }
 
-        public virtual async Task<List<TModel>> Search() =>
-            await DbSet.AsNoTracking().ToListAsync();
+        public virtual async Task<List<TModel>> Search()
+        { 
+            return await DbSet.AsNoTracking().ToListAsync();
+        }
 
-        public virtual async Task<TModel> Find(Guid id) =>
-            await DbSet.FindAsync(id);        
+        public virtual async Task<TModel> Find(Guid id)
+        {
+            return await DbSet.FindAsync(id);        
+        }
 
         public virtual async Task Create(TModel model)
         {
@@ -35,6 +39,7 @@ namespace ReadList.Infraestructure.Repositories
 
         public virtual async Task Update(TModel model)
         {
+            Db.ChangeTracker.Clear();
             DbSet.Update(model);
             await SaveChanges();
         }

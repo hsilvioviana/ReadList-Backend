@@ -4,7 +4,7 @@ namespace ReadList.Services.Interfaces
 {
     public interface IStatisticsService
     {
-        Task<StatisticsResumeViewModel> StatisticsResume(Guid userId);
+        Task<StatisticsResumeViewModel> Resume(Guid userId);
         Task<List<FormattedBookListViewModel>> YearsWithMoreBooks(Guid userId);
         Task<List<FormattedBookListViewModel>> MostReadAuthors(Guid userId);
         Task<List<FormattedBookListViewModel>> MostReadTypes(Guid userId);

@@ -27,7 +27,7 @@ namespace ReadList.Api.Controllers
         public async Task<StatisticsResumeViewModel> StatisticsResume()
         {
             var userId = User.FindFirst("id")?.Value;
-            return await _service.StatisticsResume(new Guid(userId));
+            return await _service.Resume(new Guid(userId));
         }
 
         // GET api/statistics/years-with-more-book
