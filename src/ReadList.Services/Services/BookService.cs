@@ -1,4 +1,5 @@
 using AutoMapper;
+using ReadList.Application.CustomExceptions;
 using ReadList.Application.Validations;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Interfaces;
@@ -31,9 +32,9 @@ namespace ReadList.Services.Services
         {
             var model = await _repository.Find(viewModel.Id);
 
-            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+            ThrowErrorWhen(model, "Equal", null, new EntityNotFoundException("Livro não encontrado."));
 
-            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para visualizar este livro.");
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, new UnauthorizedActionException("Você não tem autorização para visualizar este livro."));
 
             return _mapper.Map<BookViewModel>(model);
         }
@@ -59,9 +60,9 @@ namespace ReadList.Services.Services
 
             var model =  await _repository.Find(viewModel.Id);
 
-            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+            ThrowErrorWhen(model, "Equal", null, new EntityNotFoundException("Livro não encontrado."));
 
-            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para editar este livro.");
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, new UnauthorizedActionException("Você não tem autorização para editar este livro."));
 
             model.Title = viewModel.Title;
             model.Author = viewModel.Author;
@@ -84,9 +85,9 @@ namespace ReadList.Services.Services
         {
             var model =  await _repository.Find(viewModel.Id);
 
-            ThrowErrorWhen(model, "Equal", null, "Livro não encontrado.");
+            ThrowErrorWhen(model, "Equal", null, new EntityNotFoundException("Livro não encontrado."));
 
-            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, "Você não tem autorização para deletar este livro.");
+            ThrowErrorWhen(model.UserId, "NotEqual", viewModel.UserId, new UnauthorizedActionException("Você não tem autorização para deletar este livro."));
 
             await _repository.Delete(model.Id);
         }

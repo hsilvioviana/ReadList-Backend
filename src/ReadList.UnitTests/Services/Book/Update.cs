@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.CustomExceptions;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -84,7 +85,7 @@ namespace ReadList.UnitTests.Services.Book
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Update(viewModel));
+            await Assert.ThrowsAsync<EntityNotFoundException>(async () => await service.Update(viewModel));
         }
 
         [Fact]
@@ -109,7 +110,7 @@ namespace ReadList.UnitTests.Services.Book
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Update(viewModel));
+            await Assert.ThrowsAsync<UnauthorizedActionException>(async () => await service.Update(viewModel));
         }
 
 

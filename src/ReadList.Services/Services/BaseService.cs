@@ -1,4 +1,5 @@
 using FluentValidation;
+using ReadList.Application.CustomExceptions;
 
 namespace ReadList.Services.Services
 {
@@ -10,11 +11,11 @@ namespace ReadList.Services.Services
 
             if (!result.IsValid)
             {
-                throw new Exception(result.Errors[0].ToString());
+                throw new InvalidInputException(result.Errors[0].ToString());
             }
         }
 
-        public void ThrowErrorWhen<T>(T value1, string TypeOfComparison, T value2, string errorMessage)
+        public void ThrowErrorWhen<T, E>(T value1, string TypeOfComparison, T value2, E exception) where E : Exception
         {
             var throwError = false;
 
@@ -29,7 +30,7 @@ namespace ReadList.Services.Services
 
             if (throwError)
             {
-                throw new Exception(errorMessage);
+                throw exception;
             }
         }
     }

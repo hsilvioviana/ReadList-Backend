@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.CustomExceptions;
 using ReadList.Application.Utils;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
@@ -22,7 +23,7 @@ namespace ReadList.UnitTests.Services.User
             var service = Service();
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async() => await service.Login(new LoginViewModel()));
+            await Assert.ThrowsAsync<InvalidInputException>(async() => await service.Login(new LoginViewModel()));
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace ReadList.UnitTests.Services.User
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Login(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.Login(viewModel));
         }
 
         [Fact]
@@ -54,7 +55,7 @@ namespace ReadList.UnitTests.Services.User
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Login(viewModel));
+            await Assert.ThrowsAsync<EntityNotFoundException>(async () => await service.Login(viewModel));
         }
 
         [Fact]
@@ -65,12 +66,12 @@ namespace ReadList.UnitTests.Services.User
 
             var viewModel = new LoginViewModel()
             {
-                Username = "joao",
+                Username = "joao123",
                 Password = "654321"
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Login(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.Login(viewModel));
         }
 
         [Fact]
