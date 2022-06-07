@@ -65,7 +65,6 @@ namespace ReadList.UnitTests.Services.BookGenreRelation
                 GenreId = _genreId1
             };
 
-
             // Act
             var relationsBeforeCreate = _context.BookGenreRelation.Where(bgr => bgr.BookId == _bookId).ToList();
 

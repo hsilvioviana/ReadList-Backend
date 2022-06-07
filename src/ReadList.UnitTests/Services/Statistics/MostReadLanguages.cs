@@ -38,8 +38,10 @@ namespace ReadList.UnitTests.Services.Statistics
             // Arrange
             var service = Service();
 
+            var userWithoutBooksId = Guid.NewGuid();
+
             // Act
-            var list = await service.MostReadLanguages(Guid.NewGuid());
+            var list = await service.MostReadLanguages(userWithoutBooksId);
 
             // Assert
             Assert.NotNull(list);

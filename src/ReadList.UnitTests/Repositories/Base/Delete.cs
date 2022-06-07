@@ -55,6 +55,8 @@ namespace ReadList.UnitTests.Repositories.Base
                 UpdatedAt = DateTime.Now
             };
 
+            var notFoundId = Guid.NewGuid();
+
             // Act
             await repository.Create(model);
 
@@ -63,7 +65,7 @@ namespace ReadList.UnitTests.Repositories.Base
             // Act & Assert
             Assert.Single(usersBeforeDelete);
 
-            await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () => await repository.Delete(Guid.NewGuid()));
+            await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () => await repository.Delete(notFoundId));
         }
 
         private static IBaseRepository<UserModel> Repository()

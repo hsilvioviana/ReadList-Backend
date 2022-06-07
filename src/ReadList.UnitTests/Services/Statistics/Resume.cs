@@ -41,8 +41,10 @@ namespace ReadList.UnitTests.Services.Statistics
             // Arrange
             var service = Service();
 
+            var userWithoutBooksId = Guid.NewGuid();
+
             // Act
-            var resume = await service.Resume(Guid.NewGuid());
+            var resume = await service.Resume(userWithoutBooksId);
 
             // Assert
             Assert.NotNull(resume);

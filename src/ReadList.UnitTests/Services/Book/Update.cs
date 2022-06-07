@@ -69,9 +69,11 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var notFoundId = Guid.NewGuid();
+
             var viewModel = new UpdateBookViewModel()
             {
-                Id = Guid.NewGuid(),
+                Id = notFoundId,
                 UserId = _userId,
                 Title = "Voo Noturno",
                 Author = "Antoine de Saint-Exupéry",
@@ -94,10 +96,12 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var otherUserId = Guid.NewGuid();
+
             var viewModel = new UpdateBookViewModel()
             {
                 Id = _bookId,
-                UserId = Guid.NewGuid(),
+                UserId = otherUserId,
                 Title = "Voo Noturno",
                 Author = "Antoine de Saint-Exupéry",
                 ReleaseYear = 1931,

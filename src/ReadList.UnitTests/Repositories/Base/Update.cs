@@ -64,9 +64,11 @@ namespace ReadList.UnitTests.Repositories.Base
                 UpdatedAt = DateTime.Now
             };
 
+            var notFoundId = Guid.NewGuid();
+
             var modelUpdated = new UserModel()
             {
-                Id = Guid.NewGuid(),
+                Id = notFoundId,
                 Username = "joaozinho123",
                 Email = "joaozinho123@email.com",
                 Password = "123456",

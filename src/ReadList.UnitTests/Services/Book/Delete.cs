@@ -53,9 +53,11 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var notFoundId = Guid.NewGuid();
+
             var viewModel = new DeleteBookViewModel()
             {
-                Id = Guid.NewGuid(),
+                Id = notFoundId,
                 UserId = _userId,
             };
 
@@ -69,10 +71,12 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var otherUserId = Guid.NewGuid();
+
             var viewModel = new DeleteBookViewModel()
             {
                 Id = _bookId,
-                UserId = Guid.NewGuid(),
+                UserId = otherUserId,
             };
 
             var findViewModel = new FindBookViewModel()
@@ -94,7 +98,6 @@ namespace ReadList.UnitTests.Services.Book
             Assert.NotNull(bookAfterTryDelete);
             Assert.Equal("O Pequeno Príncipe", bookAfterTryDelete.Title);
         }
-
 
         private static IBookService Service()
         {

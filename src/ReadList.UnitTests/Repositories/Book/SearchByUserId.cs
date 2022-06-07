@@ -18,8 +18,10 @@ namespace ReadList.UnitTests.Repositories.Book
             // Arrange
             var repository = Repository();
 
+            var notFoundId = Guid.NewGuid();
+
             // Act
-            var books = await repository.SearchByUserId(Guid.NewGuid());
+            var books = await repository.SearchByUserId(notFoundId);
 
             // Assert
             Assert.Empty(books);
