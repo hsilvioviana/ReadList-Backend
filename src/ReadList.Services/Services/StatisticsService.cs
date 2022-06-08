@@ -1,3 +1,4 @@
+using ReadList.Application.QueryParams;
 using ReadList.Application.ViewModels;
 using ReadList.Services.Interfaces;
 
@@ -12,9 +13,9 @@ namespace ReadList.Services.Services
             _bookService = bookService;
         }
   
-        public async Task<StatisticsResumeViewModel> Resume(Guid userId)
+        public async Task<StatisticsResumeViewModel> Resume(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var statistics = new StatisticsResumeViewModel();
 
@@ -43,9 +44,9 @@ namespace ReadList.Services.Services
             return statistics;
         }
 
-        public async Task<List<FormattedBookListViewModel>> YearsWithMoreBooks(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> YearsWithMoreBooks(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var years = books.GroupBy(b => b.ReadingYear);
 
@@ -67,9 +68,9 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<FormattedBookListViewModel>> MostReadAuthors(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> MostReadAuthors(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var authors = books.GroupBy(b => b.Author);
 
@@ -91,9 +92,9 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<FormattedBookListViewModel>> MostReadTypes(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> MostReadTypes(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var types = books.GroupBy(b => b.IsFiction ? "Ficção" : "Não-Ficção");
 
@@ -115,9 +116,9 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<FormattedBookListViewModel>> MostReadGenres(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> MostReadGenres(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var list = new List<FormattedBookListViewModel>();
 
@@ -151,9 +152,9 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<FormattedBookListViewModel>> MostReadCountries(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> MostReadCountries(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var countries = books.GroupBy(b => b.CountryOfOrigin);
 
@@ -175,9 +176,9 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<FormattedBookListViewModel>> MostReadLanguages(Guid userId)
+        public async Task<List<FormattedBookListViewModel>> MostReadLanguages(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             var languages = books.GroupBy(b => b.Language);
 
@@ -199,16 +200,16 @@ namespace ReadList.Services.Services
             return list.OrderByDescending(l => l.Count).ToList();
         }
 
-        public async Task<List<BookViewModel>> OldestBooks(Guid userId)
+        public async Task<List<BookViewModel>> OldestBooks(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             return books.OrderBy(b => b.ReleaseYear).ToList();
         }
 
-        public async Task<List<BookViewModel>> BiggestBooks(Guid userId)
+        public async Task<List<BookViewModel>> BiggestBooks(Guid userId, DateRangeQueryParam range)
         {
-            var books = await _bookService.Search(userId);
+            var books = await _bookService.Search(userId, range);
 
             return books.OrderByDescending(b => b.NumberOfPages).ToList();
         }

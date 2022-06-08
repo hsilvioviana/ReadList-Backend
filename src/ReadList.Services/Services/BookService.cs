@@ -1,5 +1,6 @@
 using AutoMapper;
 using ReadList.Application.CustomExceptions;
+using ReadList.Application.QueryParams;
 using ReadList.Application.Validations;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Interfaces;
@@ -21,9 +22,9 @@ namespace ReadList.Services.Services
             _mapper = mapper;
         }
 
-        public async Task<List<BookViewModel>> Search(Guid userId)
+        public async Task<List<BookViewModel>> Search(Guid userId, DateRangeQueryParam range)
         {
-            var models = await _repository.SearchByUserId(userId);
+            var models = await _repository.SearchByUserId(userId, range.StartDate, range.EndDate);
 
             return _mapper.Map<List<BookViewModel>>(models);
         }
@@ -94,7 +95,7 @@ namespace ReadList.Services.Services
 
         public async Task<List<FormattedBookListViewModel>> SearchDividedByYear(Guid userId)
         {
-            var models = await _repository.SearchByUserId(userId);
+            var models = await _repository.SearchByUserId(userId, null, null);
 
             var viewModels = _mapper.Map<List<BookViewModel>>(models);
 
