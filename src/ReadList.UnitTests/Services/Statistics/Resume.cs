@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.QueryParams;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
 using ReadList.Infraestructure.Repositories;
@@ -20,8 +21,10 @@ namespace ReadList.UnitTests.Services.Statistics
             // Arrange
             var service = Service();
 
+            var queryParam = new DateRangeQueryParam() { StartDate = null, EndDate = null };
+
             // Act
-            var resume = await service.Resume(_userId);
+            var resume = await service.Resume(_userId, queryParam);
 
             // Assert
             Assert.NotNull(resume);
@@ -43,8 +46,10 @@ namespace ReadList.UnitTests.Services.Statistics
 
             var userWithoutBooksId = Guid.NewGuid();
 
+            var queryParam = new DateRangeQueryParam() { StartDate = null, EndDate = null };
+
             // Act
-            var resume = await service.Resume(userWithoutBooksId);
+            var resume = await service.Resume(userWithoutBooksId, queryParam);
 
             // Assert
             Assert.NotNull(resume);
