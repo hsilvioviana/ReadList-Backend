@@ -1,3 +1,4 @@
+using ReadList.Application.CustomExceptions;
 using System.Text.Json;
 
 namespace ReadList.Api
@@ -22,7 +23,13 @@ namespace ReadList.Api
                 var response = context.Response;
                 response.ContentType = "application/json";
 
-                response.StatusCode = 400;
+                response.StatusCode = error switch
+                {
+                    InvalidInputException => 400,
+                    UnauthorizedActionException => 403,
+                    EntityNotFoundException => 404,
+                    _ => 400,
+                };
 
                 var result = JsonSerializer.Serialize(new { message = error?.Message });
                 await response.WriteAsync(result);

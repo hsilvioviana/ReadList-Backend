@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.CustomExceptions;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -43,7 +44,7 @@ namespace ReadList.UnitTests.Services.Book
             Assert.NotNull(bookBeforeDelete);
             Assert.Equal("O Pequeno Príncipe", bookBeforeDelete.Title);
 
-            await Assert.ThrowsAsync<Exception>(async () => await service.Find(findViewModel));
+            await Assert.ThrowsAsync<EntityNotFoundException>(async () => await service.Find(findViewModel));
         }
 
         [Fact]
@@ -52,14 +53,16 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var notFoundId = Guid.NewGuid();
+
             var viewModel = new DeleteBookViewModel()
             {
-                Id = Guid.NewGuid(),
+                Id = notFoundId,
                 UserId = _userId,
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Delete(viewModel));
+            await Assert.ThrowsAsync<EntityNotFoundException>(async () => await service.Delete(viewModel));
         }
 
         [Fact]
@@ -68,10 +71,12 @@ namespace ReadList.UnitTests.Services.Book
             // Arrange
             var service = Service();
 
+            var otherUserId = Guid.NewGuid();
+
             var viewModel = new DeleteBookViewModel()
             {
                 Id = _bookId,
-                UserId = Guid.NewGuid(),
+                UserId = otherUserId,
             };
 
             var findViewModel = new FindBookViewModel()
@@ -86,14 +91,13 @@ namespace ReadList.UnitTests.Services.Book
             Assert.NotNull(bookBeforeTryDelete);
             Assert.Equal("O Pequeno Príncipe", bookBeforeTryDelete.Title);
 
-            await Assert.ThrowsAsync<Exception>(async () => await service.Delete(viewModel));
+            await Assert.ThrowsAsync<UnauthorizedActionException>(async () => await service.Delete(viewModel));
 
             var bookAfterTryDelete = await service.Find(findViewModel);
 
             Assert.NotNull(bookAfterTryDelete);
             Assert.Equal("O Pequeno Príncipe", bookAfterTryDelete.Title);
         }
-
 
         private static IBookService Service()
         {

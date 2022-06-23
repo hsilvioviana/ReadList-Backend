@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.CustomExceptions;
+using ReadList.Application.QueryParams;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -38,7 +40,9 @@ namespace ReadList.UnitTests.Services.Book
             // Act
             await service.Create(viewModel);
 
-            var books = await service.Search(_userId);
+            var queryParam = new DateRangeQueryParam() { StartDate = null, EndDate = null };
+
+            var books = await service.Search(_userId, queryParam);
 
             // Assert
             Assert.NotEmpty(books);
@@ -59,7 +63,7 @@ namespace ReadList.UnitTests.Services.Book
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Create(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.Create(viewModel));
         }
 
         [Fact]
@@ -83,7 +87,7 @@ namespace ReadList.UnitTests.Services.Book
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.Create(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.Create(viewModel));
         }
 
         private static IBookService Service()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReadList.Application.QueryParams;
 using ReadList.Domain.Interfaces;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -18,8 +19,10 @@ namespace ReadList.UnitTests.Repositories.Book
             // Arrange
             var repository = Repository();
 
+            var notFoundId = Guid.NewGuid();
+
             // Act
-            var books = await repository.SearchByUserId(Guid.NewGuid());
+            var books = await repository.SearchByUserId(notFoundId, null, null);
 
             // Assert
             Assert.Empty(books);
@@ -32,7 +35,7 @@ namespace ReadList.UnitTests.Repositories.Book
             var repository = Repository();
 
             // Act
-            var books = await repository.SearchByUserId(_userId);
+            var books = await repository.SearchByUserId(_userId, null, null);
 
             // Assert
             Assert.Single(books);

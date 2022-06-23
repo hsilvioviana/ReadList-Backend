@@ -14,9 +14,11 @@ namespace ReadList.Infraestructure.Repositories
             _context = context;
         }
 
-        public async Task<List<BookModel>> SearchByUserId(Guid userId)
+        public async Task<List<BookModel>> SearchByUserId(Guid userId, int? startDate, int? endDate)
         {
-            return await _context.Book.Where(b => b.UserId == userId)
+            return await _context.Book.Where(b => b.UserId == userId
+            && (!startDate.HasValue || b.ReadingYear >= startDate)
+            && (!endDate.HasValue || b.ReadingYear <= endDate))
             .Include(b => b.BookGenreRelations)
                 .ThenInclude(bgr => bgr.Genre)
             .OrderBy(b => b.ReadingYear)

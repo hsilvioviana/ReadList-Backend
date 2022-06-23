@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ReadList.Application.AutoMapper;
+using ReadList.Application.CustomExceptions;
 using ReadList.Application.ViewModels;
 using ReadList.Domain.Models;
 using ReadList.Infraestructure.Context;
@@ -21,7 +22,7 @@ namespace ReadList.UnitTests.Services.User
             var service = Service();
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async() => await service.SignUp(new SignUpViewModel()));
+            await Assert.ThrowsAsync<InvalidInputException>(async() => await service.SignUp(new SignUpViewModel()));
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace ReadList.UnitTests.Services.User
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.SignUp(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.SignUp(viewModel));
         }
 
         [Fact]
@@ -55,7 +56,7 @@ namespace ReadList.UnitTests.Services.User
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.SignUp(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.SignUp(viewModel));
         }
 
         [Fact]
@@ -72,7 +73,7 @@ namespace ReadList.UnitTests.Services.User
             };
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(async () => await service.SignUp(viewModel));
+            await Assert.ThrowsAsync<InvalidInputException>(async () => await service.SignUp(viewModel));
         }
 
         [Fact]

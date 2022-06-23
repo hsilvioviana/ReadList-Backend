@@ -51,10 +51,12 @@ namespace ReadList.UnitTests.Repositories.Base
                 UpdatedAt = DateTime.Now
             };
 
+            var notFoundId = Guid.NewGuid();
+
             // Act
             await repository.Create(model);
 
-            var user = await repository.Find(Guid.NewGuid());
+            var user = await repository.Find(notFoundId);
 
             // Assert
             Assert.Null(user);

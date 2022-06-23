@@ -19,8 +19,10 @@ namespace ReadList.UnitTests.Repositories.BookGenreRelation
             // Arrange
             var repository = Repository();
 
+            var notFoundId = Guid.NewGuid();
+
             // Act
-            await repository.DeleteByBookId(Guid.NewGuid());
+            await repository.DeleteByBookId(notFoundId);
 
             var relations = _context.BookGenreRelation.ToList();
 
