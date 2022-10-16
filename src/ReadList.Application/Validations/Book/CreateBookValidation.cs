@@ -28,7 +28,7 @@ namespace ReadList.Application.Validations
                 .LessThan(10000).WithMessage("{PropertyName} deve ser menor que 10000!");
 
             RuleFor(t => t.IsFiction)
-                .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!");
+                .NotNull().WithMessage("{PropertyName} deve ter algum valor!");
 
             RuleForEach(t => t.Genres)
                 .MinimumLength(3).WithMessage("Todos os gêneros devem ter pelo menos 3 caracteres!")
