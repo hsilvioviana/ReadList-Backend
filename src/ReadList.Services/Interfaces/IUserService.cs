@@ -6,5 +6,6 @@ namespace ReadList.Services.Interfaces
     {
         Task<AuthenticationResponse> SignUp(SignUpViewModel viewModel);
         Task<AuthenticationResponse> Login(LoginViewModel viewModel);
+        Task<AuthenticationResponse> Update(string currentUsername, UpdateUserViewModel viewModel);
     }
 }

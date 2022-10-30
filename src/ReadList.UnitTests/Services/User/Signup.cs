@@ -95,6 +95,7 @@ namespace ReadList.UnitTests.Services.User
             // Assert
             Assert.NotNull(authentication);
             Assert.Equal("teste", authentication.Username);
+            Assert.Equal("teste@email.com", authentication.Email);
             Assert.NotNull(authentication.Token);
         }
 

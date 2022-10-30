@@ -46,6 +46,7 @@ namespace ReadList.Services.Services
             return new AuthenticationResponse() 
             {
                 Username = model.Username,
+                Email = model.Email,
                 Token = new JWT(_configuration).GenerateToken(_mapper.Map<UserViewModel>(model))
             };
         }
@@ -67,6 +68,48 @@ namespace ReadList.Services.Services
             return new AuthenticationResponse() 
             {
                 Username = user.Username,
+                Email = user.Email,
+                Token = new JWT(_configuration).GenerateToken(_mapper.Map<UserViewModel>(user))
+            };
+        }
+
+        public async Task<AuthenticationResponse> Update(string currentUsername, UpdateUserViewModel viewModel)
+        {
+            Validate(new UpdateUserValidation(), viewModel);
+
+            var user = await _repository.SearchByUsername(currentUsername);
+
+            ThrowErrorWhen(user, "Equal", null, new EntityNotFoundException("Usuário não encontrado."));
+
+            var checkUsername = await _repository.SearchByUsername(viewModel.Username);
+
+            if (checkUsername?.Id != user.Id)
+                ThrowErrorWhen(checkUsername, "NotEqual", null, new InvalidInputException("O Username fornecido já está em uso."));
+
+            var checkEmail = await _repository.SearchByEmail(viewModel.Email);
+
+            if (checkEmail?.Id != user.Id)
+                ThrowErrorWhen(checkEmail, "NotEqual", null, new InvalidInputException("O Email fornecido já está em uso."));
+
+            if(!string.IsNullOrEmpty(viewModel.Password) && !string.IsNullOrEmpty(viewModel.NewPassword))
+            {
+                var correctPassword = Security.Check(user.Password, viewModel.Password);
+
+                ThrowErrorWhen(correctPassword, "Equal", false, new InvalidInputException("Senha incorreta."));
+
+                user.Password = Security.Hash(viewModel.NewPassword);
+            }
+
+            user.Username = viewModel.Username;
+            user.Email = viewModel.Email;
+            user.UpdatedAt = DateTime.Now;
+
+            await _repository.Update(user);
+
+            return new AuthenticationResponse()
+            {
+                Username = user.Username,
+                Email = user.Email,
                 Token = new JWT(_configuration).GenerateToken(_mapper.Map<UserViewModel>(user))
             };
         }
