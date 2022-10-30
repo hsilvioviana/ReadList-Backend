@@ -61,5 +61,31 @@ namespace ReadList.Api.Controllers
         {
             return await _service.Login(viewModel);
         }
+
+        // PUT api/users/update
+        /// <summary>
+        /// Atualizar dados do usuário.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de body:
+        /// 
+        ///     {
+        ///         "username": "joao123",
+        ///         "email": "joao123@email.com",
+        ///         "password": "123456",
+        ///         "newPassword": "1234567"
+        ///     }
+        /// </remarks>
+        /// <param name="viewModel">Dados de atualização.</param>
+        /// <response code="200">Atualização realizada com sucesso.</response>
+        /// <response code="400">Erro na atualização.</response>
+        [HttpPut("update")]
+        [Authorize]
+        public async Task<AuthenticationResponse> Update([FromBody] UpdateUserViewModel viewModel)
+        {
+            var currentUsername = User.FindFirst("username")?.Value;
+
+            return await _service.Update(currentUsername, viewModel);
+        }
     }
 }
