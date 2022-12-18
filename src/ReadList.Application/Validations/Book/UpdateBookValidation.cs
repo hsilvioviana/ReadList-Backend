@@ -10,12 +10,12 @@ namespace ReadList.Application.Validations
             RuleFor(t => t.Title)
                 .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")
                 .MinimumLength(3).WithMessage("{PropertyName} deve ter pelo menos 3 caracteres!")
-                .MaximumLength(30).WithMessage("{PropertyName} deve ter no máximo 30 caracteres!");
+                .MaximumLength(90).WithMessage("{PropertyName} deve ter no máximo 90 caracteres!");
 
             RuleFor(t => t.Author)
                 .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")
                 .MinimumLength(3).WithMessage("{PropertyName} deve ter pelo menos 3 caracteres!")
-                .MaximumLength(30).WithMessage("{PropertyName} deve ter no máximo 30 caracteres!");
+                .MaximumLength(90).WithMessage("{PropertyName} deve ter no máximo 90 caracteres!");
 
             RuleFor(t => t.ReleaseYear)
                 .NotEmpty().WithMessage("{PropertyName} deve ter algum valor!")
