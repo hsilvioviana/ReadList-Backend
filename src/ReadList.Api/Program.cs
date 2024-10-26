@@ -1,13 +1,24 @@
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ReadList.Api;
 using ReadList.Application.AutoMapper;
 using ReadList.CrossCutting;
+using ReadList.Infraestructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configuration = new ConfigurationBuilder()
+    .AddEnvironmentVariables()
+    .Build();
+
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    config.AddConfiguration(configuration);
+});
 
 // Add services to the container.
 
@@ -111,5 +122,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var dbContext = serviceScope.ServiceProvider.GetService<PostgresDbContext>();
+    dbContext.Database.Migrate();
+}
 
 app.Run();
